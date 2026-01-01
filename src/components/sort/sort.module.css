@@ -26,3 +26,22 @@
 	gap: 8px;
 	cursor: pointer;
 }
+
+@media (max-width: 768px) {
+	.sort {
+		gap: 25px;
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 480px) {
+	.sort {
+		gap: 15px;
+		font-size: 13px;
+	}
+
+	.sort span {
+		grid-template-columns: 18px 1fr;
+		gap: 6px;
+	}
+}

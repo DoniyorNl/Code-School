@@ -13,8 +13,8 @@ const Search = ({ className, ...props }: SearchProps): JSX.Element => {
 	const [search, setSearch] = useState('')
 	const [response, setResponse] = useState<PageItem[]>([])
 	const router = useRouter()
-	const searchHandler = (id: string) => {
-		router.push(`/${router.query?.type || 'courses'}/${id}`)
+	const searchHandler = (alias: string) => {
+		router.push(`/${router.query?.type || 'courses'}/${alias}`)
 		setResponse([])
 		setSearch('')
 	}
@@ -42,7 +42,7 @@ const Search = ({ className, ...props }: SearchProps): JSX.Element => {
 			{response.length ? (
 				<div className={styles.searchResponse}>
 					{response.map(c => (
-						<div onClick={() => searchHandler(c._id)} key={c._id}>
+						<div onClick={() => searchHandler(c.alias)} key={c._id}>
 							{c.title}
 						</div>
 					))}

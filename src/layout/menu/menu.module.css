@@ -42,16 +42,19 @@
 	border: 1px solid #e5e5e5;
 }
 
-.secondLevelBlock {
-	overflow: hidden;
+.secondLevelActive {
+	font-weight: 500;
+	border: 2px solid var(--primary);
 }
 
 .secondLevelBlock {
-	display: none;
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.3s ease-in-out;
 }
 
 .secondLevelBlockActive {
-	display: block;
+	max-height: 500px;
 }
 
 .thirdLevel {

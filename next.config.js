@@ -1,8 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	reactStrictMode: true,
+	reactStrictMode: false, // Hydration warning'larni kamaytirish uchun
 	images: {
-		domains: ['media.graphassets.com'], // Ruxsat berilgan domenlarni bu yerga qo'shing
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'media.graphassets.com',
+			},
+		],
 	},
 
 	webpack(config) {

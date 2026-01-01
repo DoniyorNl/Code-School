@@ -22,7 +22,7 @@ export const firstLevelMenu: IFirstLevelMenu[] = [
 
 export const navLinks = [
 	{ name: 'Home', route: '/' },
-	{ name: 'About', route: '/courses/reactjs_id' },
+	{ name: 'About', route: '/courses/react-js' },
 ]
 export const company = [
 	<AmazonIcon />,

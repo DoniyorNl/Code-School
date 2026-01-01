@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 import { IconButton, Search, Text } from '../../components'
-import { navLinks } from '../../helpers/constants'
+import { firstLevelMenu, navLinks } from '../../helpers/constants'
 import Logo from '../logo.svg'
 import styles from './navbar.module.css'
 
@@ -37,6 +37,11 @@ const Navbar = () => {
 							<Text style={{ color: 'white' }}>{nav.name}</Text>
 						</Link>
 					))}
+					{firstLevelMenu.map((menu, idx) => (
+						<Link href={`/${menu.route}`} key={`menu-${idx}`}>
+							<Text style={{ color: 'white' }}>{menu.name}</Text>
+						</Link>
+					))}
 					<Search />
 				</div>
 				<IconButton
@@ -56,7 +61,12 @@ const Navbar = () => {
 							<Text className={styles.navTitle}>{nav.name}</Text>
 						</Link>
 					))}
-					<Search className={styles.search} />
+					{firstLevelMenu.map((menu, idx) => (
+						<Link href={`/${menu.route}`} key={`menu-${idx}`} className={styles.navLink}>
+							<Text className={styles.navTitle}>{menu.name}</Text>
+						</Link>
+					))}
+					{/* <Search className={styles.search} /> */}
 				</motion.div>
 			</nav>
 		</div>

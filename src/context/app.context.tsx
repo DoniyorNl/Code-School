@@ -23,9 +23,25 @@ export const AppContextProvider = ({
 	const setMenu = (newMenu: MenuItem[]) => {
 		setMenuState(newMenu)
 	}
-	
+
 	useEffect(() => {
-		setMenu(menu)
+		// Preserve isOpened state when menu updates
+		setMenuState(prevState => {
+			if (prevState.length === 0) {
+				return menu
+			}
+
+			// Merge new menu data with existing isOpened states
+			return menu.map(newItem => {
+				const existingItem = prevState.find(
+					prev => prev._id.secondCategory === newItem._id.secondCategory,
+				)
+				return {
+					...newItem,
+					isOpened: existingItem?.isOpened ?? newItem.isOpened ?? false,
+				}
+			})
+		})
 	}, [menu])
 
 	return (

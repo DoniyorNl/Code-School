@@ -9,13 +9,16 @@ import styles from './menu.module.css'
 
 const Menu = (): JSX.Element => {
 	const { menu, firstCategory, setMenu } = useContext(AppContext)
-	const reversedMenu = menu.length > 2 ? [...menu].reverse() : menu
 	const router = useRouter()
 
 	const openSecondBlock = (category: string) => {
 		if (setMenu) {
 			setMenu(
-				menu.map(c => (c._id.secondCategory === category ? { ...c, isOpened: !c.isOpened } : c)),
+				menu.map(c =>
+					c._id.secondCategory === category
+						? { ...c, isOpened: !c.isOpened }
+						: { ...c, isOpened: false },
+				),
 			)
 		}
 	}
@@ -27,7 +30,7 @@ const Menu = (): JSX.Element => {
 					return (
 						<div key={c.route}>
 							<>
-								<Link href={`/${c.route}/${menu[0].pages[0]._id}`}>
+								<Link href={`/${c.route}`}>
 									<div
 										className={cn(styles.firstLevel, {
 											[styles.firstLevelActive]: c.id === firstCategory,
@@ -49,17 +52,15 @@ const Menu = (): JSX.Element => {
 	const buildSecondLevel = (menuItem: IFirstLevelMenu) => {
 		return (
 			<div className={styles.secondBlock}>
-				{reversedMenu.map(q => {
-					const isActive = q.pages.some(p => `/${menuItem.route}/${p._id}` === router.asPath)
-
-					if (isActive) {
-						q.isOpened = true
-					}
+				{menu.map(q => {
+					const isActive = q.pages.some(p => `/${menuItem.route}/${p.alias}` === router.asPath)
 
 					return (
 						<div key={q._id.secondCategory}>
 							<div
-								className={styles.secondLevel}
+								className={cn(styles.secondLevel, {
+									[styles.secondLevelActive]: isActive,
+								})}
 								onClick={() => openSecondBlock(q._id.secondCategory)}
 							>
 								{q._id.secondCategory}
@@ -82,9 +83,9 @@ const Menu = (): JSX.Element => {
 		return pages.map(p => (
 			<Link
 				key={p._id}
-				href={`/${route}/${p._id}`}
+				href={`/${route}/${p.alias}`}
 				className={cn(styles.thirdLevel, {
-					[styles.thirdLevelActive]: `/${route}/${p._id}` === router.asPath,
+					[styles.thirdLevelActive]: `/${route}/${p.alias}` === router.asPath,
 				})}
 			>
 				{p.title}

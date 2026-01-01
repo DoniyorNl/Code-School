@@ -25,9 +25,9 @@ const CoursePageComponent = ({ page, products }: CoursePageComponentProps): JSX.
 	}
 
 	const animations = {
-		initial: { scale: 1 },
-		animate: { scale: 1 },
-		exit: { scale: 1 },
+		initial: { opacity: 0, scale: 0.8 },
+		animate: { opacity: 1, scale: 1 },
+		exit: { opacity: 0, scale: 0.8 },
 	}
 
 	return (
@@ -47,18 +47,20 @@ const CoursePageComponent = ({ page, products }: CoursePageComponentProps): JSX.
 			</AnimatePresence>
 
 			{/* VACATIONS */}
-			<div className={styles.hhTitle}>
-				<Heading tag='h2'>Vacations - {page.category}</Heading>
-				<Tag color='red' size='m'>
-					hh.uz
-				</Tag>
-			</div>
-
-			{/* HHDATA */}
-			{page.hh && <HhData {...page.hh} />}
+			{page.hh && page.hh.count > 0 && (
+				<>
+					<div className={styles.hhTitle}>
+						<Heading tag='h2'>Vacations - {page.category}</Heading>
+						<Tag color='red' size='m'>
+							hh.uz
+						</Tag>
+					</div>
+					<HhData {...page.hh} />
+				</>
+			)}
 
 			{/* ADVANTAGES */}
-			{page.advantages && page.advantages.length && (
+			{page.advantages && page.advantages.length > 0 && (
 				<>
 					<Heading tag='h2'>Advantages</Heading>
 					<Advantages advantages={page.advantages} />
@@ -70,7 +72,7 @@ const CoursePageComponent = ({ page, products }: CoursePageComponentProps): JSX.
 
 			{/* SKILLS */}
 			<Heading tag='h2'>Skills</Heading>
-			{page.tags.length &&
+			{page.tags.length > 0 &&
 				page.tags.map(t => (
 					<Tag color='primary' key={uuidv4()}>
 						{t}

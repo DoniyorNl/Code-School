@@ -3,9 +3,31 @@
 	align-items: center;
 	justify-content: space-between;
 	margin-bottom: 20px;
+	flex-wrap: wrap;
+	gap: 15px;
 }
 .hhTitle {
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+	.title {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+		margin-bottom: 15px;
+	}
+
+	.hhTitle {
+		gap: 8px;
+	}
+}
+
+@media (max-width: 480px) {
+	.title {
+		margin-bottom: 10px;
+	}
 }

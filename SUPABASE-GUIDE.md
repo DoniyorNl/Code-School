@@ -104,7 +104,7 @@ INSERT INTO pages (
   'ReactJS - bu Facebook tomonidan yaratilgan UI kutubxona',
   ARRAY['React', 'JavaScript', 'Frontend'],
   (SELECT id FROM second_categories WHERE name = 'Programming' LIMIT 1),
-  120, 500000, 1200000, 2500000
+  120, 500, 1200, 2500
 );
 ```
 

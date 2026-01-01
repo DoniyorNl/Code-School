@@ -6,8 +6,13 @@
 	box-sizing: border-box;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 body {
 	font-family: var(--font-family);
+	overflow-x: hidden;
 }
 
 a {
@@ -20,8 +25,25 @@ ul {
 }
 
 #nprogress .bar {
-	background-color: var(--red) !important;
-	height: 10px;
+	background: linear-gradient(90deg, #ff6449 0%, #ff8874 50%, #ff6449 100%) !important;
+	background-size: 200% 100% !important;
+	height: 3px !important;
+	box-shadow: 0 0 10px rgba(255, 100, 73, 0.5), 0 0 5px rgba(255, 100, 73, 0.3) !important;
+	animation: nprogress-glow 2s ease-in-out infinite !important;
+}
+
+#nprogress .peg {
+	box-shadow: 0 0 10px #ff6449, 0 0 5px #ff6449 !important;
+}
+
+@keyframes nprogress-glow {
+	0%,
+	100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
 }
 
 :root {
@@ -38,4 +60,16 @@ ul {
 	--green: #0fbd74;
 	--green-light: #cbffe9;
 	--menu-sidebar: #d3deff;
+}
+
+@media (max-width: 768px) {
+	body {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 480px) {
+	body {
+		font-size: 13px;
+	}
 }
