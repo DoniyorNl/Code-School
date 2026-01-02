@@ -11,6 +11,16 @@
 	transition: all 0.2s ease;
 }
 
+.button:focus {
+	outline: 2px solid var(--primary);
+	outline-offset: 2px;
+}
+
+.button:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
 .primary {
 	color: var(--white);
 	background-color: var(--primary);

@@ -1,6 +1,39 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { supabase } from '../../lib/supabase'
 
+type ProductData = {
+	id: string
+	alias: string
+	title: string
+	page_id: string
+	product_id: string
+	category: string
+	price: number
+	credit: number
+	images: string[]
+	old_price: number
+	description: string
+	advantages: string
+	disadvantages: string
+	tags: string[]
+	initial_rating: number
+	review_count: number
+}
+
+type CharacteristicData = {
+	name: string
+	value: string
+}
+
+type ReviewData = {
+	id: string
+	name: string
+	title: string
+	description: string
+	rating: number
+	product_id: string
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'POST') {
 		try {
@@ -14,9 +47,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 			if (productsError) throw productsError
 
+			const typedProducts = products as ProductData[]
+
 			// Get characteristics and reviews for each product
 			const result = await Promise.all(
-				products.map(async product => {
+				typedProducts.map(async product => {
 					// Get characteristics
 					const { data: characteristics, error: charError } = await supabase
 						.from('characteristics')
@@ -25,6 +60,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 					if (charError) throw charError
 
+					const typedCharacteristics = characteristics as CharacteristicData[]
+
 					// Get reviews
 					const { data: reviews, error: reviewsError } = await supabase
 						.from('reviews')
@@ -32,6 +69,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 						.eq('product_id', product.id)
 
 					if (reviewsError) throw reviewsError
+
+					const typedReviews = reviews as ReviewData[]
 
 					// Format to match old structure
 					return {
@@ -48,13 +87,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 						advantages: product.advantages || '',
 						disadvantages: product.disadvantages || '',
 						tags: product.tags || [],
-						characteristics: characteristics.map(c => ({
+						characteristics: typedCharacteristics.map(c => ({
 							name: c.name,
 							value: c.value,
 						})),
 						initialRating: Number(product.initial_rating),
 						reviewCount: product.review_count,
-						reviews: reviews.map(r => ({
+						reviews: typedReviews.map(r => ({
 							_id: r.id,
 							name: r.name,
 							title: r.title,
@@ -67,9 +106,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			)
 
 			return res.status(200).json(result)
-		} catch (error: any) {
+		} catch (error) {
 			console.error('Product-find error:', error)
-			return res.status(400).json({ error: error.message })
+			const message = error instanceof Error ? error.message : 'Unknown error'
+			return res.status(400).json({ error: message })
 		}
 	}
 

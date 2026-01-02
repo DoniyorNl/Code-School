@@ -45,96 +45,236 @@ const getProductIcon = (title: string, tags: string[]) => {
 
 	// React variants
 	if (titleLower.includes('react advanced') || titleLower.includes('redux')) {
-		return <SiRedux style={{ fontSize: '70px', color: '#764ABC' }} title='Redux' />
+		return (
+			<SiRedux
+				style={{ fontSize: '70px', color: '#764ABC' }}
+				title='Redux'
+				aria-label='Redux icon'
+			/>
+		)
 	}
 	if (
 		titleLower.includes('react') &&
 		(titleLower.includes('fullstack') || titleLower.includes('full-stack'))
 	) {
-		return <SiNodedotjs style={{ fontSize: '70px', color: '#339933' }} title='Full-Stack' />
+		return (
+			<SiNodedotjs
+				style={{ fontSize: '70px', color: '#339933' }}
+				title='Full-Stack'
+				aria-label='Full-Stack icon'
+			/>
+		)
 	}
 	if (titleLower.includes('react')) {
-		return <FaReact style={{ fontSize: '70px', color: '#61DAFB' }} title='React' />
+		return (
+			<FaReact
+				style={{ fontSize: '70px', color: '#61DAFB' }}
+				title='React'
+				aria-label='React icon'
+			/>
+		)
 	}
 
 	// Vue variants
 	if (titleLower.includes('nuxt')) {
-		return <SiNuxtdotjs style={{ fontSize: '70px', color: '#00C58E' }} title='Nuxt.js' />
+		return (
+			<SiNuxtdotjs
+				style={{ fontSize: '70px', color: '#00C58E' }}
+				title='Nuxt.js'
+				aria-label='Nuxt.js icon'
+			/>
+		)
 	}
 	if (titleLower.includes('vue')) {
-		return <FaVuejs style={{ fontSize: '70px', color: '#42B883' }} title='Vue.js' />
+		return (
+			<FaVuejs
+				style={{ fontSize: '70px', color: '#42B883' }}
+				title='Vue.js'
+				aria-label='Vue.js icon'
+			/>
+		)
 	}
 
 	// Angular
 	if (titleLower.includes('angular')) {
-		return <FaAngular style={{ fontSize: '70px', color: '#DD0031' }} title='Angular' />
+		return (
+			<FaAngular
+				style={{ fontSize: '70px', color: '#DD0031' }}
+				title='Angular'
+				aria-label='Angular icon'
+			/>
+		)
 	}
 
 	// Next.js
 	if (titleLower.includes('next')) {
-		return <SiNextdotjs style={{ fontSize: '70px', color: '#000000' }} title='Next.js' />
+		return (
+			<SiNextdotjs
+				style={{ fontSize: '70px', color: '#000000' }}
+				title='Next.js'
+				aria-label='Next.js icon'
+			/>
+		)
 	}
 
 	// Design
 	if (titleLower.includes('ui/ux') || allTags.includes('ui') || allTags.includes('ux')) {
-		return <FaFigma style={{ fontSize: '70px', color: '#F24E1E' }} title='UI/UX Design' />
+		return (
+			<FaFigma
+				style={{ fontSize: '70px', color: '#F24E1E' }}
+				title='UI/UX Design'
+				aria-label='UI/UX Design icon'
+			/>
+		)
 	}
 	if (titleLower.includes('photoshop') || allTags.includes('photoshop')) {
-		return <SiAdobephotoshop style={{ fontSize: '70px', color: '#31A8FF' }} title='Photoshop' />
+		return (
+			<SiAdobephotoshop
+				style={{ fontSize: '70px', color: '#31A8FF' }}
+				title='Photoshop'
+				aria-label='Photoshop icon'
+			/>
+		)
 	}
 	if (titleLower.includes('illustrator') || allTags.includes('illustrator')) {
-		return <SiAdobeillustrator style={{ fontSize: '70px', color: '#FF9A00' }} title='Illustrator' />
+		return (
+			<SiAdobeillustrator
+				style={{ fontSize: '70px', color: '#FF9A00' }}
+				title='Illustrator'
+				aria-label='Illustrator icon'
+			/>
+		)
 	}
 	if (titleLower.includes('graphic') || allTags.includes('graphic')) {
-		return <FaPaintBrush style={{ fontSize: '70px', color: '#FF0000' }} title='Graphic Design' />
+		return (
+			<FaPaintBrush
+				style={{ fontSize: '70px', color: '#FF0000' }}
+				title='Graphic Design'
+				aria-label='Graphic Design icon'
+			/>
+		)
 	}
 	if (titleLower.includes('web design')) {
-		return <FaPaintBrush style={{ fontSize: '70px', color: '#FF6B6B' }} title='Web Design' />
+		return (
+			<FaPaintBrush
+				style={{ fontSize: '70px', color: '#FF6B6B' }}
+				title='Web Design'
+				aria-label='Web Design icon'
+			/>
+		)
 	}
 
 	// Marketing
 	if (titleLower.includes('digital marketing')) {
-		return <FaBullhorn style={{ fontSize: '70px', color: '#FF6B35' }} title='Digital Marketing' />
+		return (
+			<FaBullhorn
+				style={{ fontSize: '70px', color: '#FF6B35' }}
+				title='Digital Marketing'
+				aria-label='Digital Marketing icon'
+			/>
+		)
 	}
 	if (titleLower.includes('smm') || allTags.includes('smm')) {
-		return <FaInstagram style={{ fontSize: '70px', color: '#E1306C' }} title='SMM' />
+		return (
+			<FaInstagram
+				style={{ fontSize: '70px', color: '#E1306C' }}
+				title='SMM'
+				aria-label='Social Media Marketing icon'
+			/>
+		)
 	}
 	if (titleLower.includes('seo') || allTags.includes('seo')) {
-		return <FaSearchDollar style={{ fontSize: '70px', color: '#4285F4' }} title='SEO' />
+		return (
+			<FaSearchDollar
+				style={{ fontSize: '70px', color: '#4285F4' }}
+				title='SEO'
+				aria-label='SEO icon'
+			/>
+		)
 	}
 
 	// Business
 	if (titleLower.includes('analytics') || allTags.includes('analytics')) {
-		return <FaChartLine style={{ fontSize: '70px', color: '#10B981' }} title='Business Analytics' />
+		return (
+			<FaChartLine
+				style={{ fontSize: '70px', color: '#10B981' }}
+				title='Business Analytics'
+				aria-label='Business Analytics icon'
+			/>
+		)
 	}
 	if (titleLower.includes('startup') || allTags.includes('startup')) {
-		return <FaLightbulb style={{ fontSize: '70px', color: '#FCD34D' }} title='Startup' />
+		return (
+			<FaLightbulb
+				style={{ fontSize: '70px', color: '#FCD34D' }}
+				title='Startup'
+				aria-label='Startup icon'
+			/>
+		)
 	}
 	if (titleLower.includes('project management') || allTags.includes('pm')) {
-		return <FaTasks style={{ fontSize: '70px', color: '#8B5CF6' }} title='Project Management' />
+		return (
+			<FaTasks
+				style={{ fontSize: '70px', color: '#8B5CF6' }}
+				title='Project Management'
+				aria-label='Project Management icon'
+			/>
+		)
 	}
 
 	// Books
 	if (titleLower.includes('book') || allTags.includes('book')) {
-		return <FaBook style={{ fontSize: '70px', color: '#F59E0B' }} title='Book' />
+		return (
+			<FaBook style={{ fontSize: '70px', color: '#F59E0B' }} title='Book' aria-label='Book icon' />
+		)
 	}
 
 	// Services
 	if (titleLower.includes('consulting')) {
-		return <FaBriefcase style={{ fontSize: '70px', color: '#6366F1' }} title='Consulting' />
+		return (
+			<FaBriefcase
+				style={{ fontSize: '70px', color: '#6366F1' }}
+				title='Consulting'
+				aria-label='Consulting icon'
+			/>
+		)
 	}
 	if (titleLower.includes('web development')) {
-		return <FaCode style={{ fontSize: '70px', color: '#14B8A6' }} title='Web Development' />
+		return (
+			<FaCode
+				style={{ fontSize: '70px', color: '#14B8A6' }}
+				title='Web Development'
+				aria-label='Web Development icon'
+			/>
+		)
 	}
 	if (titleLower.includes('mobile')) {
-		return <FaMobileAlt style={{ fontSize: '70px', color: '#EC4899' }} title='Mobile Development' />
+		return (
+			<FaMobileAlt
+				style={{ fontSize: '70px', color: '#EC4899' }}
+				title='Mobile Development'
+				aria-label='Mobile Development icon'
+			/>
+		)
 	}
 	if (titleLower.includes('software') || titleLower.includes('development')) {
-		return <FaCog style={{ fontSize: '70px', color: '#64748B' }} title='Software Development' />
+		return (
+			<FaCog
+				style={{ fontSize: '70px', color: '#64748B' }}
+				title='Software Development'
+				aria-label='Software Development icon'
+			/>
+		)
 	}
 
 	// Default fallback
-	return <FaCode style={{ fontSize: '70px', color: '#6B7280' }} title='Course' />
+	return (
+		<FaCode
+			style={{ fontSize: '70px', color: '#6B7280' }}
+			title='Course'
+			aria-label='Course icon'
+		/>
+	)
 }
 
 const Product = motion(

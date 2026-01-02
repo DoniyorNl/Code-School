@@ -8,4 +8,5 @@ export interface IconButtonProps
 	extends DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	icon: Icontype
 	appearance: 'primary' | 'white'
+	'aria-label'?: string
 }

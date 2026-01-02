@@ -25,6 +25,10 @@ const Rating = forwardRef(
 					onMouseEnter={() => chnageRatingDisplay(idx + 1)}
 					onMouseLeave={() => chnageRatingDisplay(rating)}
 					onClick={() => clickRatingHandler(idx + 1)}
+					onKeyDown={e => handleKeyDown(e, idx + 1)}
+					tabIndex={isEditabled ? 0 : -1}
+					role={isEditabled ? 'button' : undefined}
+					aria-label={`Rate ${idx + 1} out of 5 stars`}
 				>
 					<StarIcon />
 				</span>
@@ -48,12 +52,30 @@ const Rating = forwardRef(
 			setRating(index)
 		}
 
+		const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+			if (!isEditabled || !setRating) {
+				return
+			}
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault()
+				setRating(index)
+			} else if (e.key === 'ArrowRight' && index < 5) {
+				e.preventDefault()
+				setRating(index + 1)
+			} else if (e.key === 'ArrowLeft' && index > 1) {
+				e.preventDefault()
+				setRating(index - 1)
+			}
+		}
+
 		return (
 			<div
 				className={cn(styles.rating, {
 					[styles.error]: error,
 				})}
 				ref={ref}
+				role='group'
+				aria-label='Rating'
 				{...props}
 			>
 				{ratingArray.map((rating, idx) => (

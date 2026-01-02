@@ -1,0 +1,25 @@
+# *
+User-agent: *
+Allow: /
+
+# Disallow admin or private pages (if any)
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://samb3x.vercel.app/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 0
+
+# Block bad bots
+User-agent: SemrushBot
+User-agent: AhrefsBot
+User-agent: MJ12bot
+Disallow: /
+
+# Block AI scrapers (optional - adjust as needed)
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: CCBot
+User-agent: anthropic-ai
+Disallow: /

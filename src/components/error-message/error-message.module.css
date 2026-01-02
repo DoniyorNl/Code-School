@@ -1,0 +1,61 @@
+.errorMessage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-xl);
+	text-align: center;
+	min-height: 400px;
+}
+
+.iconWrapper {
+	margin-bottom: var(--spacing-m);
+	animation: shake 0.5s ease-in-out;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 700;
+	color: var(--red);
+	margin-bottom: var(--spacing-s);
+}
+
+.message {
+	font-size: 16px;
+	color: var(--gray-dark);
+	max-width: 500px;
+	line-height: 1.6;
+	margin-bottom: var(--spacing-m);
+}
+
+.retryButton {
+	margin-top: var(--spacing-s);
+}
+
+@keyframes shake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(-10px);
+	}
+	75% {
+		transform: translateX(10px);
+	}
+}
+
+@media (max-width: 768px) {
+	.errorMessage {
+		padding: var(--spacing-m);
+		min-height: 300px;
+	}
+
+	.title {
+		font-size: 20px;
+	}
+
+	.message {
+		font-size: 14px;
+	}
+}

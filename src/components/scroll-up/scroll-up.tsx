@@ -23,7 +23,7 @@ const ScrollUp = (): ReactElement | null => {
 			className={styles.scrollUp}
 			onClick={scrollToTop}
 		>
-			<IconButton icon='up' appearance='primary' onClick={scrollToTop} />
+			<IconButton icon='up' appearance='primary' onClick={scrollToTop} aria-label='Scroll to top' />
 		</motion.div>
 	)
 }

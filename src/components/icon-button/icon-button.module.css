@@ -9,6 +9,12 @@
 	position: absolute;
 	top: 20px;
 	right: 20px;
+	transition: all 0.2s ease;
+}
+
+.iconButton:focus {
+	outline: 2px solid var(--white);
+	outline-offset: 2px;
 }
 
 .primary {

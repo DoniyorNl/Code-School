@@ -1,4 +1,6 @@
 import { GetServerSideProps } from 'next'
+import { logger } from '../helpers/logger'
+import { getOrganizationSchema, getWebsiteSchema } from '../helpers/structured-data'
 import { MenuItem } from '../interfaces/menu.interface'
 import { PageCategory } from '../interfaces/page.interface'
 import { withLayout } from '../layout/layout'
@@ -6,8 +8,14 @@ import Seo from '../layout/seo/seo'
 import { HomePageComponent } from '../page-components'
 
 const Index = (): JSX.Element => {
+	// Combine multiple schemas into one array
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@graph': [getOrganizationSchema(), getWebsiteSchema()],
+	}
+
 	return (
-		<Seo>
+		<Seo structuredData={structuredData}>
 			<HomePageComponent />
 		</Seo>
 	)
@@ -61,7 +69,7 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async () =>
 			},
 		}
 	} catch (error) {
-		console.error('Index page SSR error:', error)
+		logger.error('Index page SSR error:', error)
 		// Return empty menu on error
 		return {
 			props: {

@@ -1,0 +1,51 @@
+{
+	"name": "CodeSchool - Dasturlash kurslari",
+	"short_name": "CodeSchool",
+	"description": "Bepul dasturlash darslari va loyihalar, algoritmlarni mustahkamlash uchun mashqlar",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#7653FC",
+	"orientation": "portrait-primary",
+	"icons": [
+		{
+			"src": "/logoPng.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/logoPng.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	],
+	"categories": ["education", "productivity"],
+	"lang": "uz",
+	"dir": "ltr",
+	"scope": "/",
+	"prefer_related_applications": false,
+	"shortcuts": [
+		{
+			"name": "Kurslar",
+			"short_name": "Kurslar",
+			"description": "Dasturlash kurslarini ko'rish",
+			"url": "/courses",
+			"icons": [
+				{
+					"src": "/logo.svg",
+					"sizes": "96x96"
+				}
+			]
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/hero.png",
+			"sizes": "1280x720",
+			"type": "image/png",
+			"label": "CodeSchool Homepage"
+		}
+	]
+}

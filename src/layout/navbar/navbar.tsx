@@ -27,9 +27,9 @@ const Navbar = () => {
 
 	return (
 		<div className={styles.navbar}>
-			<nav className={styles.nav}>
-				<Link href={'/'}>
-					<Logo className={styles.logo} />
+			<nav className={styles.nav} aria-label='Main navigation'>
+				<Link href={'/'} aria-label='Go to homepage'>
+					<Logo className={styles.logo} aria-label='Company logo' />
 				</Link>
 				<div className={styles.navigation}>
 					{navLinks.map((nav, idx) => (
@@ -49,6 +49,8 @@ const Navbar = () => {
 					icon={isOpen ? 'close' : 'menu'}
 					appearance='white'
 					className={styles.mobileIcon}
+					aria-label={isOpen ? 'Close menu' : 'Open menu'}
+					aria-expanded={isOpen}
 				/>
 				<motion.div
 					variants={variants}

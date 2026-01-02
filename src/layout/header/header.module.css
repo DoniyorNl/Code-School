@@ -1,6 +1,48 @@
 .header {
-	display: none;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	margin: 15px 15px 0 15px;
+	gap: 10px;
+	align-items: center;
 }
+
+.headerActions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.installButton {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 16px;
+	background: var(--primary);
+	color: var(--white);
+	border: none;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 2px 8px rgba(118, 83, 252, 0.3);
+}
+
+.installButton:hover {
+	background: var(--primary-hover);
+	box-shadow: 0 4px 12px rgba(118, 83, 252, 0.4);
+	transform: translateY(-1px);
+}
+
+.installButton:active {
+	transform: translateY(0);
+}
+
+.installButton svg {
+	width: 18px;
+	height: 18px;
+}
+
 .mobileMenu {
 	position: fixed;
 	z-index: 10;
@@ -12,17 +54,26 @@
 	background-color: var(--white);
 	overflow-y: scroll;
 }
+
 .closeIcon {
 	position: fixed;
 	top: 15px;
 	right: 15px;
 	z-index: 11;
 }
+
 @media screen and (max-width: 900px) {
 	.header {
-		display: grid;
-		grid-template-columns: 1fr 40px;
-		margin: 15px 15px 0 15px;
-		gap: 10px;
+		grid-template-columns: 1fr auto;
+	}
+
+	.installButton span {
+		display: none;
+	}
+
+	.installButton {
+		padding: 8px 12px;
+		min-width: 40px;
+		justify-content: center;
 	}
 }

@@ -1,0 +1,145 @@
+.errorPage {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.errorContent {
+	max-width: 600px;
+	text-align: center;
+	background: white;
+	padding: 60px 40px;
+	border-radius: 20px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	animation: fadeInUp 0.6s ease-out;
+}
+
+.errorCode {
+	font-size: 120px;
+	font-weight: bold;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	margin-bottom: 20px;
+	animation: pulse 2s ease-in-out infinite;
+}
+
+.errorTitle {
+	font-size: 32px;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+.errorDescription {
+	font-size: 18px;
+	color: #666;
+	margin-bottom: 30px;
+	line-height: 1.6;
+}
+
+.countdown {
+	font-size: 16px;
+	color: #999;
+	margin-bottom: 30px;
+	font-style: italic;
+}
+
+.errorActions {
+	display: flex;
+	gap: 15px;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-bottom: 30px;
+}
+
+.errorDetails {
+	margin-top: 40px;
+	padding-top: 30px;
+	border-top: 1px solid #eee;
+	text-align: left;
+}
+
+.errorDetails p {
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.errorDetails ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.errorDetails li {
+	padding: 8px 0;
+	color: #666;
+	position: relative;
+	padding-left: 25px;
+}
+
+.errorDetails li::before {
+	content: '✓';
+	position: absolute;
+	left: 0;
+	color: #667eea;
+	font-weight: bold;
+}
+
+.errorIllustration {
+	display: none;
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+}
+
+@media (min-width: 768px) {
+	.errorPage {
+		flex-direction: row;
+		gap: 60px;
+	}
+
+	.errorContent {
+		text-align: left;
+	}
+
+	.errorActions {
+		justify-content: flex-start;
+	}
+
+	.errorIllustration {
+		display: block;
+		animation: float 3s ease-in-out infinite;
+	}
+
+	@keyframes float {
+		0%,
+		100% {
+			transform: translateY(0px);
+		}
+		50% {
+			transform: translateY(-20px);
+		}
+	}
+}

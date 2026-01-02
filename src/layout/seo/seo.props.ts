@@ -6,4 +6,12 @@ export interface SeoProps {
 	metaDescription?: string
 	metaKeyword?: string
 	ogImage?: string
+	ogType?: 'website' | 'article' | 'profile'
+	canonicalUrl?: string
+	noindex?: boolean
+	nofollow?: boolean
+	publishedTime?: string
+	modifiedTime?: string
+	twitterHandle?: string
+	structuredData?: object
 }

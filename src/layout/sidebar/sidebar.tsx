@@ -9,8 +9,8 @@ import styles from './sidebar.module.css'
 const Sidebar = ({ className, ...props }: SidebarProps): JSX.Element => {
 	return (
 		<div className={cn(className, styles.sidebar)} {...props}>
-			<Link href={'/'} style={{ textAlign: 'center' }}>
-				<Logo />
+			<Link href={'/'} style={{ textAlign: 'center' }} aria-label='Go to homepage'>
+				<Logo aria-label='Company logo' />
 				<Divider />
 			</Link>
 			<Search />

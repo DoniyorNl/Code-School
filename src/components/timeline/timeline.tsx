@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import styles from './timeline.module.css'
 import { TimelineItemProps, TimelineProps } from './timeline.props'
 

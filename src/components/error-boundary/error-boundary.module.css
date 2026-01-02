@@ -1,0 +1,73 @@
+.errorBoundary {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-m);
+	background: var(--white);
+}
+
+.errorContent {
+	max-width: 600px;
+	text-align: center;
+}
+
+.errorTitle {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--red);
+	margin-bottom: var(--spacing-s);
+}
+
+.errorMessage {
+	font-size: 18px;
+	color: var(--gray-dark);
+	margin-bottom: var(--spacing-m);
+	line-height: 1.6;
+}
+
+.errorDetails {
+	text-align: left;
+	margin: var(--spacing-m) 0;
+	padding: var(--spacing-s);
+	background: var(--gray-light);
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.errorDetails summary {
+	font-weight: 600;
+	color: var(--primary);
+	padding: var(--spacing-xs);
+}
+
+.errorDetails pre {
+	margin-top: var(--spacing-s);
+	padding: var(--spacing-s);
+	background: var(--white);
+	border-radius: 4px;
+	overflow-x: auto;
+	font-size: 14px;
+	color: var(--red);
+}
+
+.errorActions {
+	display: flex;
+	gap: var(--spacing-s);
+	justify-content: center;
+	margin-top: var(--spacing-l);
+}
+
+@media (max-width: 768px) {
+	.errorTitle {
+		font-size: 24px;
+	}
+
+	.errorMessage {
+		font-size: 16px;
+	}
+
+	.errorActions {
+		flex-direction: column;
+	}
+}

@@ -1,6 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { supabase } from '../../../lib/supabase'
 
+type PageData = {
+	id: string
+	alias: string
+	title: string
+	tags: string[]
+	description: string
+	category: string
+	hh_count: number | null
+	hh_junior_salary: number | null
+	hh_middle_salary: number | null
+	hh_senior_salary: number | null
+}
+
+type AdvantageData = {
+	id: string
+	title: string
+	description: string
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'GET') {
 		try {
@@ -23,23 +42,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 			if (advError) throw advError
 
+			const typedPage = page as PageData
+			const typedAdvantages = advantages as AdvantageData[]
+
 			// Format response to match old structure
 			const response = {
-				_id: page.id,
-				alias: page.alias,
-				title: page.title,
-				tags: page.tags || [],
-				description: page.description,
-				category: page.category,
-				hh: page.hh_count
+				_id: typedPage.id,
+				alias: typedPage.alias,
+				title: typedPage.title,
+				tags: typedPage.tags || [],
+				description: typedPage.description,
+				category: typedPage.category,
+				hh: typedPage.hh_count
 					? {
-							count: page.hh_count,
-							juniorSalary: page.hh_junior_salary,
-							middleSalary: page.hh_middle_salary,
-							seniorSalary: page.hh_senior_salary,
-					  }
+							count: typedPage.hh_count,
+							juniorSalary: typedPage.hh_junior_salary,
+							middleSalary: typedPage.hh_middle_salary,
+							seniorSalary: typedPage.hh_senior_salary,
+						}
 					: undefined,
-				advantages: advantages.map(adv => ({
+				advantages: typedAdvantages.map(adv => ({
 					id: adv.id,
 					title: adv.title,
 					description: adv.description,
@@ -47,9 +69,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			}
 
 			return res.status(200).json(response)
-		} catch (error: any) {
+		} catch (error) {
 			console.error('Page-find by ID error:', error)
-			return res.status(400).json({ error: error.message })
+			const message = error instanceof Error ? error.message : 'Unknown error'
+			return res.status(400).json({ error: message })
 		}
 	}
 

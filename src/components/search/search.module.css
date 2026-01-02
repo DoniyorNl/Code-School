@@ -29,6 +29,11 @@
 	border-bottom: 1px solid var(--gray-light);
 	cursor: pointer;
 }
-.searchResponse div:hover {
-	background-color: rgba(0, 0, 0, 0.02);
+.searchResponse div:hover,
+.searchResponse div.selected {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+.searchResponse div:focus {
+	outline: 2px solid var(--primary);
+	outline-offset: -2px;
 }

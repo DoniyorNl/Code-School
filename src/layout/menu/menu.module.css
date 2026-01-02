@@ -40,6 +40,17 @@
 	border-radius: 18px;
 	background-color: rgba(245, 245, 204, 0.4);
 	border: 1px solid #e5e5e5;
+	text-align: left;
+	transition: all 0.2s ease;
+}
+
+.secondLevel:hover {
+	background-color: rgba(245, 245, 204, 0.6);
+}
+
+.secondLevel:focus {
+	outline: 2px solid var(--primary);
+	outline-offset: 2px;
 }
 
 .secondLevelActive {

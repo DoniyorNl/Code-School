@@ -1,0 +1,149 @@
+.installPrompt {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9999;
+	max-width: 400px;
+	width: calc(100% - 40px);
+	animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+.promptContent {
+	background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+	color: white;
+	border-radius: 16px;
+	padding: 20px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+	position: relative;
+}
+
+.closeButton {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: rgba(255, 255, 255, 0.2);
+	border: none;
+	color: white;
+	font-size: 24px;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.2s;
+}
+
+.closeButton:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.promptIcon {
+	text-align: center;
+	margin-bottom: 12px;
+	animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
+
+.promptText {
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.promptText h3 {
+	margin: 0 0 8px 0;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.promptText p {
+	margin: 0;
+	font-size: 14px;
+	opacity: 0.95;
+	line-height: 1.4;
+}
+
+.promptActions {
+	display: flex;
+	gap: 12px;
+}
+
+.installButton,
+.dismissButton {
+	flex: 1;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.installButton {
+	background: white;
+	color: var(--primary);
+}
+
+.installButton:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dismissButton {
+	background: rgba(255, 255, 255, 0.2);
+	color: white;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dismissButton:hover {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+	.installPrompt {
+		bottom: 10px;
+		width: calc(100% - 20px);
+	}
+
+	.promptContent {
+		padding: 16px;
+	}
+
+	.promptText h3 {
+		font-size: 18px;
+	}
+
+	.promptText p {
+		font-size: 13px;
+	}
+
+	.installButton,
+	.dismissButton {
+		padding: 10px 16px;
+		font-size: 13px;
+	}
+}

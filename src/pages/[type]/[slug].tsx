@@ -2,6 +2,7 @@ import Seo from '@/src/layout/seo/seo'
 import { CoursePageComponent } from '@/src/page-components'
 import { GetServerSideProps } from 'next'
 import { firstLevelMenu } from '../../helpers/constants'
+import { logger } from '../../helpers/logger'
 import { MenuItem } from '../../interfaces/menu.interface'
 import { PageModel } from '../../interfaces/page.interface'
 import { ProductModel } from '../../interfaces/product.interface'
@@ -88,7 +89,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 		// Verify page belongs to correct category
 		const pageSecondCategory = typedPageData.second_categories
 		if (pageSecondCategory?.category_id !== firstCategoryItem.id) {
-			console.log(
+			logger.log(
 				`❌ Page "${slug}" belongs to category ${pageSecondCategory?.category_id}, but requested type "${type}" is category ${firstCategoryItem.id}`,
 			)
 			return { notFound: true }
@@ -208,7 +209,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			props: { menu, page, products, firstCategory: firstCategoryItem.id },
 		}
 	} catch (error) {
-		console.error('Page SSR error:', error)
+		logger.error('Page SSR error:', error)
 		return { notFound: true }
 	}
 }

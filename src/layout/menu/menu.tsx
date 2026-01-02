@@ -57,18 +57,21 @@ const Menu = (): JSX.Element => {
 
 					return (
 						<div key={q._id.secondCategory}>
-							<div
+							<button
 								className={cn(styles.secondLevel, {
 									[styles.secondLevelActive]: isActive,
 								})}
 								onClick={() => openSecondBlock(q._id.secondCategory)}
+								aria-expanded={q.isOpened}
+								aria-controls={`menu-${q._id.secondCategory}`}
 							>
 								{q._id.secondCategory}
-							</div>
+							</button>
 							<div
 								className={cn(styles.secondLevelBlock, {
 									[styles.secondLevelBlockActive]: q.isOpened,
 								})}
+								id={`menu-${q._id.secondCategory}`}
 							>
 								{buildThirdLevel(q.pages, menuItem.route)}
 							</div>

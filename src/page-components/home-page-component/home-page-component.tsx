@@ -29,11 +29,21 @@ const HomePageComponent = () => {
 					</Button>
 				</div>
 				<div className={styles.heroImage}>
-					<Image src={'/hero.png'} alt={'hero-image'} width={600} height={500} />
+					<Image
+						src={'/hero.png'}
+						alt={'hero-image'}
+						width={635}
+						height={508}
+						priority
+					fetchPriority='high'
+						placeholder='blur'
+						blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
+						quality={90}
+					/>
 				</div>
 			</div>
 			<div className={styles.company}>
-				<Heading tag='h3'>Trusted by the world's best</Heading>
+				<Heading tag='h2'>Trusted by the world's best</Heading>
 				<div className={styles.companyIcon}>
 					{company.map((icon, idx) => (
 						<Fragment key={idx}>{icon}</Fragment>
@@ -41,7 +51,7 @@ const HomePageComponent = () => {
 				</div>
 			</div>
 			<div className={styles.timeline}>
-				<Heading tag='h3'>What we can teach you</Heading>
+				<Heading tag='h2'>What we can teach you</Heading>
 				<div className={styles.timelineCard}>
 					<Timeline>
 						{timeLineList.map(({ Icon, title, text }, idx) => (

@@ -8,6 +8,7 @@ const Input = forwardRef(
 		{ className, error, ...props }: TextAreaProps,
 		ref: ForwardedRef<HTMLTextAreaElement>,
 	): JSX.Element => {
+		const errorId = error ? `error-${Math.random().toString(36).substr(2, 9)}` : undefined
 		return (
 			<div className={cn(styles.textAreaWrapper, className)}>
 				<textarea
@@ -15,9 +16,15 @@ const Input = forwardRef(
 						[styles.error]: error,
 					})}
 					ref={ref}
+					aria-invalid={!!error}
+					aria-describedby={error ? errorId : undefined}
 					{...props}
 				/>
-				{error && <span className={styles.errorMessage}>{error.message}</span>}
+				{error && (
+					<span className={styles.errorMessage} id={errorId} role='alert'>
+						{error.message}
+					</span>
+				)}
 			</div>
 		)
 	},

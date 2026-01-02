@@ -8,6 +8,7 @@ const Input = forwardRef(
 		{ className, error, ...props }: InputProps,
 		ref: ForwardedRef<HTMLInputElement>,
 	): JSX.Element => {
+		const errorId = error ? `error-${Math.random().toString(36).substr(2, 9)}` : undefined
 		return (
 			<div className={styles.inputWrapper}>
 				<input
@@ -16,8 +17,14 @@ const Input = forwardRef(
 					})}
 					{...props}
 					ref={ref}
+					aria-invalid={!!error}
+					aria-describedby={error ? errorId : undefined}
 				/>
-				{error && <span className={styles.errorMessage}>{error.message}</span>}
+				{error && (
+					<span className={styles.errorMessage} id={errorId} role='alert'>
+						{error.message}
+					</span>
+				)}
 			</div>
 		)
 	},

@@ -9,6 +9,7 @@ const IconButton = ({ appearance, icon, className, ...props }: IconButtonProps):
 				[styles.primary]: appearance == 'primary',
 				[styles.white]: appearance == 'white',
 			})}
+			aria-label={props['aria-label']}
 			{...props}
 		>
 			<IconComponent />
