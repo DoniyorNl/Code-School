@@ -1,5 +1,5 @@
-import { GetServerSideProps } from 'next'
 import { logger } from '../helpers/logger'
+import { safeGetServerSideProps } from '../helpers/ssr'
 import { getOrganizationSchema, getWebsiteSchema } from '../helpers/structured-data'
 import { MenuItem } from '../interfaces/menu.interface'
 import { PageCategory } from '../interfaces/page.interface'
@@ -24,12 +24,10 @@ const Index = (): JSX.Element => {
 
 export default withLayout(Index)
 
-export const getServerSideProps: GetServerSideProps<HomePageProps> = async () => {
+export const getServerSideProps = safeGetServerSideProps(async () => {
 	try {
-		// Server-side da to'g'ridan-to'g'ri supabase'ga murojaat qilamiz
 		const { supabase } = await import('../lib/supabase')
 
-		// Get second categories with pages for category 1 (Courses)
 		const { data: secondCategories, error: catError } = await supabase
 			.from('second_categories')
 			.select('id, name')
@@ -37,7 +35,6 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async () =>
 
 		if (catError) throw catError
 
-		// Get pages for each second category
 		const menu: MenuItem[] = await Promise.all(
 			((secondCategories || []) as Array<{ id: string; name: string }>).map(async secondCat => {
 				const { data: pages, error: pagesError } = await supabase
@@ -71,15 +68,15 @@ export const getServerSideProps: GetServerSideProps<HomePageProps> = async () =>
 		}
 	} catch (error) {
 		logger.error('Index page SSR error:', error)
-		// Return empty menu on error
 		return {
 			props: {
 				menu: [],
 				firstCategory: PageCategory.Courses,
+				fetchError: error instanceof Error ? error.message : String(error),
 			},
 		}
 	}
-}
+})
 
 //
 interface HomePageProps {

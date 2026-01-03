@@ -24,7 +24,7 @@ const HomePageComponent = () => {
 						arrow='right'
 						style={{ border: '1px solid yellowgreen', color: 'yellowgreen' }}
 					>
-						<a href="http://localhost:3000/contact">Join for free</a>
+						<a href='/contact'>Join for free</a>
 					</Button>
 				</div>
 				<div className={styles.heroImage}>

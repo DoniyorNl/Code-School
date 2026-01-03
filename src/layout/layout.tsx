@@ -27,18 +27,38 @@ export const withLayout = <T extends Record<string, unknown> & IAppContext>(
 ) => {
 	return function withLayoutComponent(props: T): JSX.Element {
 		const router = useRouter()
+		// If any server-side fetch produced an error, surface a visible banner so
+		// operator can see the issue in the browser and check deployment logs.
+		const fetchError = (props as any).fetchError as string | undefined
+
+		const Content = (
+			<>
+				{fetchError && (
+					<div
+						style={{
+							background: '#ffebeb',
+							color: '#8b0000',
+							padding: '12px 16px',
+							textAlign: 'center',
+						}}
+					>
+						Server data fetch error: {fetchError}. Check deployment logs and Supabase env variables.
+					</div>
+				)}
+				<Component {...props} />
+			</>
+		)
+
 		return (
 			<AppContextProvider menu={props.menu} firstCategory={props.firstCategory}>
 				{router.asPath === '/' ? (
 					<>
 						<Header />
-						<Component {...props} />
+						{Content}
 						<ScrollUp />
 					</>
 				) : (
-					<Layout>
-						<Component {...props} />
-					</Layout>
+					<Layout>{Content}</Layout>
 				)}
 			</AppContextProvider>
 		)

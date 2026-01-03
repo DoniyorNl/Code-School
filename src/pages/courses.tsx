@@ -1,8 +1,8 @@
 import { GraduationCap } from 'lucide-react'
-import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { Heading, Text } from '../components'
 import { logger } from '../helpers/logger'
+import { safeGetServerSideProps } from '../helpers/ssr'
 import { MenuItem } from '../interfaces/menu.interface'
 import { PageCategory } from '../interfaces/page.interface'
 import { withLayout } from '../layout/layout'
@@ -64,71 +64,57 @@ const Courses = ({ menu }: CoursesPageProps): JSX.Element => {
 
 export default withLayout(Courses)
 
-export const getServerSideProps: GetServerSideProps<CoursesPageProps> = async () => {
-	try {
-		const { supabase } = await import('../lib/supabase')
+export const getServerSideProps = safeGetServerSideProps(async () => {
+	const { supabase } = await import('../lib/supabase')
 
-		// Get second categories with pages for category 1 (Courses)
-		const { data: secondCategories, error: catError } = await supabase
-			.from('second_categories')
-			.select('id, name')
-			.eq('category_id', PageCategory.Courses)
+	const { data: secondCategories, error: catError } = await supabase
+		.from('second_categories')
+		.select('id, name')
+		.eq('category_id', PageCategory.Courses)
 
-		if (catError) {
-			logger.error('Error fetching categories:', catError)
-			throw catError
-		}
-
-		// Get pages for each second category
-		const menu: MenuItem[] = await Promise.all(
-			((secondCategories || []) as Array<{ id: string; name: string }>).map(async secondCat => {
-				const { data: pages, error: pagesError } = await supabase
-					.from('pages')
-					.select('id, alias, title, category')
-					.eq('second_category_id', secondCat.id)
-					.order('title', { ascending: true })
-
-				if (pagesError) {
-					logger.error('Error fetching pages:', pagesError)
-					throw pagesError
-				}
-
-				return {
-					_id: {
-						secondCategory: secondCat.name,
-					},
-					pages: (
-						(pages || []) as Array<{ id: string; alias: string; title: string; category: string }>
-					).map(p => ({
-						alias: p.alias,
-						title: p.title,
-						_id: p.id,
-						category: p.category,
-					})),
-				}
-			}),
-		)
-
-		// Filter out categories with no pages
-		const filteredMenu = menu.filter(item => item.pages.length > 0)
-
-		return {
-			props: {
-				menu: filteredMenu,
-				firstCategory: PageCategory.Courses,
-			},
-		}
-	} catch (error) {
-		logger.error('Courses page SSR error:', error)
-		// Return empty menu on error
-		return {
-			props: {
-				menu: [],
-				firstCategory: PageCategory.Courses,
-			},
-		}
+	if (catError) {
+		logger.error('Error fetching categories:', catError)
+		throw catError
 	}
-}
+
+	const menu: MenuItem[] = await Promise.all(
+		((secondCategories || []) as Array<{ id: string; name: string }>).map(async secondCat => {
+			const { data: pages, error: pagesError } = await supabase
+				.from('pages')
+				.select('id, alias, title, category')
+				.eq('second_category_id', secondCat.id)
+				.order('title', { ascending: true })
+
+			if (pagesError) {
+				logger.error('Error fetching pages:', pagesError)
+				throw pagesError
+			}
+
+			return {
+				_id: {
+					secondCategory: secondCat.name,
+				},
+				pages: (
+					(pages || []) as Array<{ id: string; alias: string; title: string; category: string }>
+				).map(p => ({
+					alias: p.alias,
+					title: p.title,
+					_id: p.id,
+					category: p.category,
+				})),
+			}
+		}),
+	)
+
+	const filteredMenu = menu.filter(item => item.pages.length > 0)
+
+	return {
+		props: {
+			menu: filteredMenu,
+			firstCategory: PageCategory.Courses,
+		},
+	}
+})
 
 interface CoursesPageProps {
 	menu: MenuItem[]

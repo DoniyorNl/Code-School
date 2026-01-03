@@ -1,6 +1,6 @@
-import { GetServerSideProps } from 'next'
 import { firstLevelMenu } from '../../helpers/constants'
 import { logger } from '../../helpers/logger'
+import { safeGetServerSideProps } from '../../helpers/ssr'
 
 const Type = () => {
 	return <div>Type</div>
@@ -8,7 +8,7 @@ const Type = () => {
 
 export default Type
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps = safeGetServerSideProps(async ({ query }) => {
 	const { type } = query
 
 	logger.log('🔍 [TYPE PAGE] Received type:', type)
@@ -28,15 +28,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 	}
 
 	try {
-		// Redirect to first available page with timeout
 		const { supabase } = await import('../../lib/supabase')
 
-		// Create timeout promise
+		// Timeout to avoid long waits
 		const timeoutPromise = new Promise((_, reject) =>
 			setTimeout(() => reject(new Error('Query timeout')), 5000),
 		)
 
-		// Find a second_category that has pages
 		const queryPromise = supabase
 			.from('second_categories')
 			.select('id, name')
@@ -53,7 +51,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		type Page = { alias: string }
 
 		if (secondCategories && secondCategories.length > 0) {
-			// Try each second_category until we find one with pages
 			for (const sc of secondCategories as SecondCategory[]) {
 				const pagesQueryPromise = supabase
 					.from('pages')
@@ -89,4 +86,4 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		logger.log('❌ [TYPE PAGE] Error or timeout:', error)
 		return { notFound: true }
 	}
-}
+})

@@ -1,14 +1,22 @@
 import Seo from '@/src/layout/seo/seo'
 import { CoursePageComponent } from '@/src/page-components'
-import { GetServerSideProps } from 'next'
 import { firstLevelMenu } from '../../helpers/constants'
 import { logger } from '../../helpers/logger'
+import { safeGetServerSideProps } from '../../helpers/ssr'
 import { MenuItem } from '../../interfaces/menu.interface'
 import { PageModel } from '../../interfaces/page.interface'
 import { ProductModel } from '../../interfaces/product.interface'
 import { withLayout } from '../../layout/layout'
 
-const Index = ({ products, firstCategory, page }: PageProps) => {
+interface PagePropsLocal extends Record<string, unknown> {
+	menu: MenuItem[]
+	page: PageModel
+	products: ProductModel[]
+	firstCategory: number
+}
+
+const Index = (props: PagePropsLocal) => {
+	const { products, firstCategory, page } = props as PagePropsLocal
 	return (
 		<Seo
 			metaTitle={page.title}
@@ -22,7 +30,7 @@ const Index = ({ products, firstCategory, page }: PageProps) => {
 
 export default withLayout(Index)
 
-export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query }) => {
+export const getServerSideProps = safeGetServerSideProps(async ({ query }) => {
 	const { slug, type } = query
 
 	if (!slug) {
@@ -54,6 +62,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			string,
 			Array<{ id: string; alias: string; title: string; category: string }>
 		>()
+
 		;(
 			(allPages || []) as Array<{
 				id: string
@@ -74,20 +83,17 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			})
 		})
 
-		const menu: MenuItem[] = (
-			(secondCategories || []) as Array<{
-				id: string
-				name: string
-			}>
-		).map(secondCat => ({
-			_id: { secondCategory: secondCat.name },
-			pages: (pagesBySecondCategory.get(secondCat.id) || []).map(p => ({
-				alias: p.alias,
-				title: p.title,
-				_id: p.id,
-				category: p.category,
-			})),
-		}))
+		const menu: MenuItem[] = ((secondCategories || []) as Array<{ id: string; name: string }>).map(
+			secondCat => ({
+				_id: { secondCategory: secondCat.name },
+				pages: (pagesBySecondCategory.get(secondCat.id) || []).map(p => ({
+					alias: p.alias,
+					title: p.title,
+					_id: p.id,
+					category: p.category,
+				})),
+			}),
+		)
 
 		// Get page by slug (alias)
 		const { data: pageData, error: pageError } = await supabase
@@ -113,13 +119,16 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			hh_senior_salary: number
 			second_categories: { category_id: number }
 		}
+
 		const typedPageData = pageData as PageData
 
 		// Verify page belongs to correct category
 		const pageSecondCategory = typedPageData.second_categories
 		if (pageSecondCategory?.category_id !== firstCategoryItem.id) {
 			logger.log(
-				`❌ Page "${slug}" belongs to category ${pageSecondCategory?.category_id}, but requested type "${type}" is category ${firstCategoryItem.id}`,
+				`❌ Page "${slug}" belongs to category ${pageSecondCategory?.category_id}, but requested type "${type}" is category ${
+					firstCategoryItem.id
+				}`,
 			)
 			return { notFound: true }
 		}
@@ -178,6 +187,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			initial_rating: number
 			review_count: number
 		}
+
 		type Characteristic = { name: string; value: string }
 		type Review = {
 			id: string
@@ -232,10 +242,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 				advantages: product.advantages || '',
 				disadvantages: product.disadvantages || '',
 				tags: product.tags || [],
-				characteristics: characteristics.map(c => ({
-					name: c.name,
-					value: c.value,
-				})),
+				characteristics: characteristics.map(c => ({ name: c.name, value: c.value })),
 				initialRating: Number(product.initial_rating),
 				reviewCount: product.review_count,
 				reviews: reviews.map(r => ({
@@ -249,18 +256,9 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			}
 		})
 
-		return {
-			props: { menu, page, products, firstCategory: firstCategoryItem.id },
-		}
+		return { props: { menu, page, products, firstCategory: firstCategoryItem.id } }
 	} catch (error) {
 		logger.error('Page SSR error:', error)
 		return { notFound: true }
 	}
-}
-
-interface PageProps extends Record<string, unknown> {
-	menu: MenuItem[]
-	page: PageModel
-	products: ProductModel[]
-	firstCategory: number
-}
+})
