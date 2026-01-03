@@ -8,12 +8,7 @@ import Seo from '../layout/seo/seo'
 import { HomePageComponent } from '../page-components'
 
 //
-interface HomePageProps {
-	menu: MenuItem[]
-	firstCategory: PageCategory
-}
-
-const Index = ({ menu, firstCategory }: HomePageProps): JSX.Element => {
+const Index = (): JSX.Element => {
 	// Combine multiple schemas into one array
 	const structuredData = {
 		'@context': 'https://schema.org',

@@ -9,9 +9,7 @@ import Header from '../layout/header/header'
 import Seo from '../layout/seo/seo'
 import styles from '../styles/contact.module.css'
 
-interface ContactPageProps {}
-
-const ContactPage = ({}: ContactPageProps): JSX.Element => {
+const ContactPage = (): JSX.Element => {
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -73,10 +71,16 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 
 		setSubmitStatus('submitting')
 
-		// Simulate API call
-		setTimeout(() => {
-			const success = Math.random() > 0.1 // 90% success rate for demo
-			if (success) {
+		try {
+			const response = await fetch('/api/contact', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
+			})
+
+			if (response.ok) {
 				setSubmitStatus('success')
 				setFormData({ name: '', email: '', subject: '', message: '' })
 				setTimeout(() => setSubmitStatus('idle'), 5000)
@@ -84,7 +88,11 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 				setSubmitStatus('error')
 				setTimeout(() => setSubmitStatus('idle'), 5000)
 			}
-		}, 1500)
+		} catch (error) {
+			console.error('Form submission error:', error)
+			setSubmitStatus('error')
+			setTimeout(() => setSubmitStatus('idle'), 5000)
+		}
 	}
 
 	return (
@@ -157,10 +165,11 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 										<p className={styles.socialDescription}>Connect with us on social media</p>
 										<div className={styles.socialLinks}>
 											<a
-												// href='#'
+												href='https://t.me/codeschool'
 												target='_blank'
 												rel='noopener noreferrer'
 												title='Telegram'
+												aria-label='Follow us on Telegram'
 											>
 												<Icon
 													className={`${styles.socialLink} ${styles.telegram}`}
@@ -169,10 +178,11 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 												/>
 											</a>
 											<a
-												// href='#'
+												href='https://instagram.com/codeschool'
 												target='_blank'
 												rel='noopener noreferrer'
 												title='Instagram'
+												aria-label='Follow us on Instagram'
 											>
 												<Icon
 													className={`${styles.socialLink} ${styles.instagram}`}
@@ -181,10 +191,11 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 												/>
 											</a>
 											<a
-												// href='#'
+												href='https://facebook.com/codeschool'
 												target='_blank'
 												rel='noopener noreferrer'
 												title='Facebook'
+												aria-label='Follow us on Facebook'
 											>
 												<Icon
 													className={`${styles.socialLink} ${styles.facebook}`}
@@ -193,10 +204,11 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 												/>
 											</a>
 											<a
-												// href='#'
+												href='https://youtube.com/@codeschool'
 												target='_blank'
 												rel='noopener noreferrer'
 												title='YouTube'
+												aria-label='Subscribe to our YouTube channel'
 											>
 												<Icon
 													className={`${styles.socialLink} ${styles.youtube}`}
@@ -321,7 +333,7 @@ const ContactPage = ({}: ContactPageProps): JSX.Element => {
 
 export default ContactPage
 
-export const getServerSideProps: GetServerSideProps<ContactPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 	return {
 		props: {},
 	}

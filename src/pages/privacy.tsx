@@ -6,9 +6,7 @@ import Header from '../layout/header/header'
 import Seo from '../layout/seo/seo'
 import styles from '../styles/legal.module.css'
 
-interface PrivacyPageProps {}
-
-const PrivacyPage = ({}: PrivacyPageProps): JSX.Element => {
+const PrivacyPage = (): JSX.Element => {
 	return (
 		<>
 			<Header />
@@ -254,7 +252,7 @@ const PrivacyPage = ({}: PrivacyPageProps): JSX.Element => {
 
 export default PrivacyPage
 
-export const getServerSideProps: GetServerSideProps<PrivacyPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 	return {
 		props: {},
 	}

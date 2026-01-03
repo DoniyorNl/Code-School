@@ -6,9 +6,7 @@ import Header from '../layout/header/header'
 import Seo from '../layout/seo/seo'
 import styles from '../styles/legal.module.css'
 
-interface TermsPageProps {}
-
-const TermsPage = ({}: TermsPageProps): JSX.Element => {
+const TermsPage = (): JSX.Element => {
 	return (
 		<>
 			<Header />
@@ -186,7 +184,7 @@ const TermsPage = ({}: TermsPageProps): JSX.Element => {
 
 export default TermsPage
 
-export const getServerSideProps: GetServerSideProps<TermsPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 	return {
 		props: {},
 	}
