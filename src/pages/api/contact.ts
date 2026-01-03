@@ -32,12 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		}
 
 		// TODO: Integrate with email service (SendGrid, Nodemailer, EmailJS, etc.)
-		// For now, log to console and return success
-		console.log('📧 Contact form submission:')
-		console.log(`- Name: ${name}`)
-		console.log(`- Email: ${email}`)
-		console.log(`- Subject: ${subject}`)
-		console.log(`- Message: ${message}`)
+		// For now, return success. Remove verbose console logs in production.
 
 		// In production, you would:
 		// 1. Send email using SendGrid/Nodemailer

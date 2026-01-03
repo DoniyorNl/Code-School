@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import { Button, Card, Heading, Text, Timeline, TimelineItem } from '../../components'
 import HeroIllustration from '../../components/hero-illustration/hero-illustration'
@@ -7,6 +8,7 @@ import Footer from '../../layout/footer/footer'
 import styles from './home-page-component.module.css'
 
 const HomePageComponent = () => {
+	const router = useRouter()
 	return (
 		<div className={styles.home}>
 			<div className={styles.hero}>
@@ -23,8 +25,9 @@ const HomePageComponent = () => {
 						appearance='ghost'
 						arrow='right'
 						style={{ border: '1px solid yellowgreen', color: 'yellowgreen' }}
+						onClick={() => router.push('/contact')}
 					>
-						<a href='/contact'>Join for free</a>
+						Join for free
 					</Button>
 				</div>
 				<div className={styles.heroImage}>
