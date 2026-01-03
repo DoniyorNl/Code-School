@@ -1,4 +1,4 @@
-import { FaUser } from 'react-icons/fa'
+import Icon from '../icon/DynamicIcon'
 import Rating from '../rating/rating'
 import styles from './review.module.css'
 import { ReviewProps } from './review.props'
@@ -6,7 +6,7 @@ import { ReviewProps } from './review.props'
 const Review = ({ review }: ReviewProps): JSX.Element => {
 	return (
 		<div className={styles.review}>
-			<FaUser className={styles.user} />
+			<Icon name='FaUser' className={styles.user} />
 			<div className={styles.title}>
 				<span className={styles.name}>{review.name}</span>
 				<span>{review.title}</span>

@@ -2,9 +2,9 @@ import { AppContext } from '@/src/context/app.context'
 import cn from 'classnames'
 import { useRouter } from 'next/router'
 import { ChangeEvent, KeyboardEvent, useContext, useRef, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
 import { PageItem } from '../../interfaces/menu.interface'
 import Button from '../button/button'
+import Icon from '../icon/DynamicIcon'
 import Input from '../input/input'
 import styles from './search.module.css'
 import { SearchProps } from './search.props'
@@ -66,7 +66,7 @@ const Search = ({ className, ...props }: SearchProps): JSX.Element => {
 				aria-expanded={response.length > 0}
 			/>
 			<Button appearance='primary' className={styles.button} aria-label='Search button'>
-				<FaSearch />
+				<Icon name='FaSearch' />
 			</Button>
 			{response.length ? (
 				<div className={styles.searchResponse} role='listbox' id='search-results'>

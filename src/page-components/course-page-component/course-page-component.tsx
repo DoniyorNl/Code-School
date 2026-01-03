@@ -1,6 +1,5 @@
 import { AnimatePresence } from 'framer-motion'
 import { useEffect, useReducer, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import { Advantages, Heading, HhData, Product, Sort, Tag, Text } from '../../components'
 import ProductSkeleton from '../../components/product-skeleton/product-skeleton'
 import { SortEnum } from '../../components/sort/sort.props'
@@ -53,10 +52,16 @@ const CoursePageComponent = ({ page, products }: CoursePageComponentProps): JSX.
 					<ProductSkeleton />
 				</>
 			) : (
-				<AnimatePresence>
+				<AnimatePresence mode='wait'>
 					{state.products &&
-						state.products.map(c => (
-							<Product key={uuidv4()} layout transition={spring} {...animations} product={c} />
+						state.products.map((c, idx) => (
+							<Product
+								key={`${c._id}-${state.sort}-${idx}`}
+								layout
+								transition={spring}
+								{...animations}
+								product={c}
+							/>
 						))}
 				</AnimatePresence>
 			)}
@@ -88,8 +93,8 @@ const CoursePageComponent = ({ page, products }: CoursePageComponentProps): JSX.
 			{/* SKILLS */}
 			<Heading tag='h2'>Skills</Heading>
 			{page.tags.length > 0 &&
-				page.tags.map(t => (
-					<Tag color='primary' key={uuidv4()}>
+				page.tags.map((t, idx) => (
+					<Tag color='primary' key={`skill-${idx}`}>
 						{t}
 					</Tag>
 				))}

@@ -1,0 +1,147 @@
+.container {
+	max-width: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.hero {
+	text-align: center;
+	margin-bottom: 60px;
+	padding: 60px 40px;
+	background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.hero h1 {
+	font-size: 48px;
+	margin-bottom: 20px;
+	color: var(--primary);
+}
+
+.subtitle {
+	font-size: 20px;
+	color: var(--gray-dark);
+}
+
+.mission {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 30px;
+	margin-bottom: 60px;
+	padding: 0 40px;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.card {
+	padding: 40px;
+	text-align: center;
+	transition:
+		transform 0.3s ease,
+		box-shadow 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.iconWrapper {
+	font-size: 48px;
+	color: var(--red);
+	margin-bottom: 20px;
+}
+
+.card h2 {
+	font-size: 24px;
+	margin-bottom: 15px;
+	color: var(--primary);
+}
+
+.stats {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 30px;
+	margin-bottom: 60px;
+	padding: 60px 40px;
+	background: linear-gradient(135deg, #7653fc 0%, #ff6b35 100%);
+	text-align: center;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 0;
+}
+
+.stat h3 {
+	font-size: 48px;
+	color: white;
+	margin-bottom: 10px;
+}
+
+.stat p {
+	color: white;
+	font-size: 18px;
+}
+
+.story {
+	background: white;
+	padding: 60px 40px;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+	max-width: 1400px;
+	margin: 0 auto 40px;
+}
+
+.story h2 {
+	font-size: 32px;
+	margin-bottom: 30px;
+	color: var(--primary);
+	text-align: center;
+}
+
+.story p {
+	font-size: 18px;
+	line-height: 1.8;
+	color: var(--gray-dark);
+	margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+	.hero {
+		padding: 40px 20px;
+	}
+
+	.hero h1 {
+		font-size: 32px;
+	}
+
+	.subtitle {
+		font-size: 16px;
+	}
+
+	.mission {
+		grid-template-columns: 1fr;
+		padding: 0 20px;
+	}
+
+	.stats {
+		grid-template-columns: repeat(2, 1fr);
+		padding: 30px 20px;
+	}
+
+	.stat h3 {
+		font-size: 32px;
+	}
+
+	.story {
+		padding: 30px 20px;
+	}
+
+	.story h2 {
+		font-size: 24px;
+	}
+
+	.story p {
+		font-size: 16px;
+	}
+}

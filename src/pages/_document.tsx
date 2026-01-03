@@ -2,17 +2,21 @@ import { Head, Html, Main, NextScript } from 'next/document'
 
 export default function Document() {
 	return (
-		<Html lang='uz'>
+		<Html lang='uz' data-scroll-behavior='smooth'>
 			<Head>
-				{/* Preload critical assets */}
+				{/* DNS Prefetch for external resources */}
 				<link rel='dns-prefetch' href='https://media.graphassets.com' />
 				<link rel='preconnect' href='https://media.graphassets.com' />
+				<link rel='dns-prefetch' href='https://fonts.googleapis.com' />
+				<link rel='preconnect' href='https://fonts.googleapis.com' crossOrigin='anonymous' />
+
+				{/* Load font stylesheet directly - no preload needed as Next.js optimizes fonts */}
 				<link
-					rel='preload'
+					rel='stylesheet'
 					href='https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap'
-					as='style'
 				/>
-				<link rel='preload' href='/hero.png' as='image' />
+
+				{/* Icons */}
 				<link rel='icon' type='image/svg+xml' href='/logo.svg' />
 				<link rel='apple-touch-icon' href='/logoPng.png' />
 

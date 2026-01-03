@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { FaFilter } from 'react-icons/fa'
+import Icon from '../icon/DynamicIcon'
 import styles from './sort.module.css'
 import { SortEnum, SortProps } from './sort.props'
 
@@ -12,7 +12,7 @@ const Sort = ({ setSort, sort = SortEnum.Price, className, ...props }: SortProps
 				})}
 				onClick={() => setSort(SortEnum.Rating)}
 			>
-				<FaFilter className={styles.sortIcon} /> Rating
+				<Icon name='FaFilter' className={styles.sortIcon} /> Rating
 			</span>
 
 			<span
@@ -21,7 +21,7 @@ const Sort = ({ setSort, sort = SortEnum.Price, className, ...props }: SortProps
 				})}
 				onClick={() => setSort(SortEnum.Price)}
 			>
-				<FaFilter className={styles.sortIcon} /> Price
+				<Icon name='FaFilter' className={styles.sortIcon} /> Price
 			</span>
 		</div>
 	)

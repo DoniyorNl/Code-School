@@ -27,46 +27,66 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 		return { notFound: true }
 	}
 
-	// Redirect to first available page
-	const { supabase } = await import('../../lib/supabase')
+	try {
+		// Redirect to first available page with timeout
+		const { supabase } = await import('../../lib/supabase')
 
-	// Find a second_category that has pages
-	const { data: secondCategories, error: scError } = await supabase
-		.from('second_categories')
-		.select('id, name')
-		.eq('category_id', firstCategoryItem.id)
+		// Create timeout promise
+		const timeoutPromise = new Promise((_, reject) =>
+			setTimeout(() => reject(new Error('Query timeout')), 5000),
+		)
 
-	logger.log('🔍 [TYPE PAGE] All secondCategories:', secondCategories, 'error:', scError)
+		// Find a second_category that has pages
+		const queryPromise = supabase
+			.from('second_categories')
+			.select('id, name')
+			.eq('category_id', firstCategoryItem.id)
 
-	type SecondCategory = { id: number; name: string }
-	type Page = { alias: string }
+		const { data: secondCategories, error: scError } = (await Promise.race([
+			queryPromise,
+			timeoutPromise,
+		])) as any
 
-	if (secondCategories && secondCategories.length > 0) {
-		// Try each second_category until we find one with pages
-		for (const sc of secondCategories as SecondCategory[]) {
-			const { data: pages, error: pagesError } = await supabase
-				.from('pages')
-				.select('alias')
-				.eq('second_category_id', sc.id)
-				.limit(1)
+		logger.log('🔍 [TYPE PAGE] All secondCategories:', secondCategories, 'error:', scError)
 
-			logger.log(`🔍 [TYPE PAGE] Checking ${sc.name}:`, pages, 'error:', pagesError)
+		type SecondCategory = { id: number; name: string }
+		type Page = { alias: string }
 
-			if (pages && pages[0]) {
-				logger.log(
-					'✅ [TYPE PAGE] Found page! Redirecting to:',
-					`/${type}/${(pages as Page[])[0].alias}`,
-				)
-				return {
-					redirect: {
-						destination: `/${type}/${(pages as Page[])[0].alias}`,
-						permanent: false,
-					},
+		if (secondCategories && secondCategories.length > 0) {
+			// Try each second_category until we find one with pages
+			for (const sc of secondCategories as SecondCategory[]) {
+				const pagesQueryPromise = supabase
+					.from('pages')
+					.select('alias')
+					.eq('second_category_id', sc.id)
+					.limit(1)
+
+				const { data: pages, error: pagesError } = (await Promise.race([
+					pagesQueryPromise,
+					timeoutPromise,
+				])) as any
+
+				logger.log(`🔍 [TYPE PAGE] Checking ${sc.name}:`, pages, 'error:', pagesError)
+
+				if (pages && pages[0]) {
+					logger.log(
+						'✅ [TYPE PAGE] Found page! Redirecting to:',
+						`/${type}/${(pages as Page[])[0].alias}`,
+					)
+					return {
+						redirect: {
+							destination: `/${type}/${(pages as Page[])[0].alias}`,
+							permanent: false,
+						},
+					}
 				}
 			}
 		}
-	}
 
-	logger.log('❌ [TYPE PAGE] No pages found, returning 404')
-	return { notFound: true }
+		logger.log('❌ [TYPE PAGE] No pages found, returning 404')
+		return { notFound: true }
+	} catch (error) {
+		logger.log('❌ [TYPE PAGE] Error or timeout:', error)
+		return { notFound: true }
+	}
 }

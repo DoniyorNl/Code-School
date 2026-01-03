@@ -1,0 +1,264 @@
+.container {
+	padding: 120px 0 40px 0;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.hero {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.title {
+	font-size: 48px;
+	font-weight: 700;
+	margin-bottom: 20px;
+	color: var(--black);
+}
+
+.subtitle {
+	font-size: 18px;
+	color: var(--gray-dark);
+	max-width: 800px;
+	margin: 0 auto;
+	line-height: 1.6;
+}
+
+.tabs {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-bottom: 50px;
+	flex-wrap: wrap;
+}
+
+.tab,
+.tabActive {
+	padding: 14px 24px;
+	border-radius: 8px;
+	border: 2px solid var(--gray-light);
+	background: var(--white);
+	color: var(--gray-dark);
+	font-size: 16px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+}
+
+.tab:hover {
+	border-color: var(--primary);
+	color: var(--primary);
+	transform: translateY(-2px);
+}
+
+.tabActive {
+	background: var(--primary);
+	color: var(--white);
+	border-color: var(--primary);
+}
+
+.webinars {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+	gap: 30px;
+}
+
+.empty {
+	grid-column: 1 / -1;
+	text-align: center;
+	padding: 80px 20px;
+	color: var(--gray);
+}
+
+.empty p {
+	margin-top: 20px;
+	font-size: 18px;
+}
+
+.webinarCard {
+	display: flex;
+	flex-direction: column;
+	padding: 24px;
+	transition:
+		transform 0.3s ease,
+		box-shadow 0.3s ease;
+}
+
+.webinarCard:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.cardHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.webinarTitle {
+	font-size: 22px;
+	font-weight: 700;
+	margin-bottom: 12px;
+	color: var(--black);
+	line-height: 1.3;
+}
+
+.webinarDescription {
+	font-size: 14px;
+	color: var(--gray-dark);
+	line-height: 1.6;
+	margin-bottom: 20px;
+}
+
+.speakerInfo {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 16px;
+	background: var(--gray-light);
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+.speakerAvatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: var(--primary);
+	color: var(--white);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.speakerName {
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--black);
+}
+
+.speakerRole {
+	font-size: 13px;
+	color: var(--gray-dark);
+	margin-top: 2px;
+}
+
+.webinarDetails {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--gray-light);
+}
+
+.detailItem {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	color: var(--gray-dark);
+}
+
+.topics {
+	margin-bottom: 20px;
+}
+
+.topics strong {
+	display: block;
+	font-size: 14px;
+	margin-bottom: 10px;
+	color: var(--black);
+}
+
+.topicTags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.registerButton,
+.joinButton,
+.watchButton {
+	width: 100%;
+	padding: 14px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+	margin-top: auto;
+}
+
+.registerButton {
+	background: var(--primary);
+	color: var(--white);
+}
+
+.registerButton:hover {
+	background: var(--primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 16px rgba(118, 83, 252, 0.3);
+}
+
+.joinButton {
+	background: #dc3545;
+	color: var(--white);
+	animation: pulse 2s infinite;
+}
+
+.joinButton:hover {
+	background: #c82333;
+	transform: scale(1.05);
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+	}
+	50% {
+		box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+	}
+}
+
+.watchButton {
+	background: var(--gray);
+	color: var(--white);
+}
+
+.watchButton:hover {
+	background: var(--gray-dark);
+	transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+	.title {
+		font-size: 32px;
+	}
+
+	.subtitle {
+		font-size: 16px;
+	}
+
+	.webinars {
+		grid-template-columns: 1fr;
+	}
+
+	.tabs {
+		gap: 10px;
+	}
+
+	.tab,
+	.tabActive {
+		padding: 12px 18px;
+		font-size: 14px;
+	}
+}

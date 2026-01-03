@@ -10,13 +10,15 @@ import Sidebar from './sidebar/sidebar'
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
 	return (
-		<div className={styles.wrapper}>
-			<Header className={styles.header} />
-			<Sidebar className={styles.sidebar} />
-			<div className={styles.body}>{children}</div>
-			<Footer className={styles.footer} />
-			<ScrollUp />
-		</div>
+		<>
+			<Header />
+			<div className={styles.wrapper}>
+				<Sidebar className={styles.sidebar} />
+				<div className={styles.body}>{children}</div>
+				<Footer className={styles.footer} />
+				<ScrollUp />
+			</div>
+		</>
 	)
 }
 
@@ -28,7 +30,11 @@ export const withLayout = <T extends Record<string, unknown> & IAppContext>(
 		return (
 			<AppContextProvider menu={props.menu} firstCategory={props.firstCategory}>
 				{router.asPath === '/' ? (
-					<Component {...props} />
+					<>
+						<Header />
+						<Component {...props} />
+						<ScrollUp />
+					</>
 				) : (
 					<Layout>
 						<Component {...props} />

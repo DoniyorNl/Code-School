@@ -34,3 +34,9 @@
 	background-color: none;
 	border: 1px solid var(--primary);
 }
+
+.ghost {
+	color: var(--gray-dark);
+	background-color: var(--gray-light);
+	border: 1px solid var(--gray-light);
+}

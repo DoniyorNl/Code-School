@@ -33,32 +33,61 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 		const { supabase } = await import('../../lib/supabase')
 		const firstCategoryItem = firstLevelMenu.find(c => c.route === type) ?? { id: 0 }
 
-		// Get menu (second categories with pages)
+		// Optimized: Get menu (second categories with pages) in fewer queries
 		const { data: secondCategories } = await supabase
 			.from('second_categories')
 			.select('id, name')
 			.eq('category_id', firstCategoryItem.id)
 
-		const menu: MenuItem[] = await Promise.all(
-			((secondCategories || []) as Array<{ id: string; name: string }>).map(async secondCat => {
-				const { data: pages } = await supabase
-					.from('pages')
-					.select('id, alias, title, category')
-					.eq('second_category_id', secondCat.id)
-
-				return {
-					_id: { secondCategory: secondCat.name },
-					pages: (
-						(pages || []) as Array<{ id: string; alias: string; title: string; category: string }>
-					).map(p => ({
-						alias: p.alias,
-						title: p.title,
-						_id: p.id,
-						category: p.category,
-					})),
-				}
-			}),
+		// Get all pages for all second_categories in one query
+		const secondCategoryIds = ((secondCategories || []) as Array<{ id: string; name: string }>).map(
+			sc => sc.id,
 		)
+
+		const { data: allPages } = await supabase
+			.from('pages')
+			.select('id, alias, title, category, second_category_id')
+			.in('second_category_id', secondCategoryIds)
+
+		// Group pages by second_category_id
+		const pagesBySecondCategory = new Map<
+			string,
+			Array<{ id: string; alias: string; title: string; category: string }>
+		>()
+		;(
+			(allPages || []) as Array<{
+				id: string
+				alias: string
+				title: string
+				category: string
+				second_category_id: string
+			}>
+		).forEach(page => {
+			if (!pagesBySecondCategory.has(page.second_category_id)) {
+				pagesBySecondCategory.set(page.second_category_id, [])
+			}
+			pagesBySecondCategory.get(page.second_category_id)!.push({
+				id: page.id,
+				alias: page.alias,
+				title: page.title,
+				category: page.category,
+			})
+		})
+
+		const menu: MenuItem[] = (
+			(secondCategories || []) as Array<{
+				id: string
+				name: string
+			}>
+		).map(secondCat => ({
+			_id: { secondCategory: secondCat.name },
+			pages: (pagesBySecondCategory.get(secondCat.id) || []).map(p => ({
+				alias: p.alias,
+				title: p.title,
+				_id: p.id,
+				category: p.category,
+			})),
+		}))
 
 		// Get page by slug (alias)
 		const { data: pageData, error: pageError } = await supabase
@@ -116,7 +145,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 						juniorSalary: typedPageData.hh_junior_salary,
 						middleSalary: typedPageData.hh_middle_salary,
 						seniorSalary: typedPageData.hh_senior_salary,
-				  }
+					}
 				: { count: 0, juniorSalary: 0, middleSalary: 0, seniorSalary: 0 },
 			advantages: ((advantages || []) as Advantage[]).map(adv => ({
 				id: adv.id,
@@ -159,51 +188,66 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async ({ query 
 			product_id: string
 		}
 
-		const products: ProductModel[] = await Promise.all(
-			((productsData || []) as ProductData[]).map(async product => {
-				// Get characteristics
-				const { data: characteristics } = await supabase
-					.from('characteristics')
-					.select('*')
-					.eq('product_id', product.id)
+		// Optimized: Get all characteristics and reviews in one query each
+		const productIds = ((productsData || []) as ProductData[]).map(p => p.id)
 
-				// Get reviews
-				const { data: reviews } = await supabase
-					.from('reviews')
-					.select('*')
-					.eq('product_id', product.id)
+		const [characteristicsResult, reviewsResult] = await Promise.all([
+			supabase.from('characteristics').select('*').in('product_id', productIds),
+			supabase.from('reviews').select('*').in('product_id', productIds),
+		])
 
-				return {
-					alias: product.alias,
-					title: product.title,
-					_id: product.page_id,
-					productId: product.product_id,
-					category: product.category,
-					price: Number(product.price),
-					credit: Number(product.credit),
-					images: product.images,
-					oldPrice: Number(product.old_price),
-					description: product.description,
-					advantages: product.advantages || '',
-					disadvantages: product.disadvantages || '',
-					tags: product.tags || [],
-					characteristics: ((characteristics || []) as Characteristic[]).map(c => ({
-						name: c.name,
-						value: c.value,
-					})),
-					initialRating: Number(product.initial_rating),
-					reviewCount: product.review_count,
-					reviews: ((reviews || []) as Review[]).map(r => ({
-						_id: r.id,
-						name: r.name,
-						title: r.title,
-						description: r.description,
-						rating: r.rating,
-						productId: r.product_id,
-					})),
-				}
-			}),
-		)
+		// Group by product_id for fast lookup
+		const characteristicsByProduct = new Map<string, Characteristic[]>()
+		const reviewsByProduct = new Map<string, Review[]>()
+
+		;((characteristicsResult.data || []) as Characteristic[]).forEach(char => {
+			const productId = (char as any).product_id
+			if (!characteristicsByProduct.has(productId)) {
+				characteristicsByProduct.set(productId, [])
+			}
+			characteristicsByProduct.get(productId)!.push(char)
+		})
+		;((reviewsResult.data || []) as Review[]).forEach(review => {
+			if (!reviewsByProduct.has(review.product_id)) {
+				reviewsByProduct.set(review.product_id, [])
+			}
+			reviewsByProduct.get(review.product_id)!.push(review)
+		})
+
+		const products: ProductModel[] = ((productsData || []) as ProductData[]).map(product => {
+			const characteristics = characteristicsByProduct.get(product.id) || []
+			const reviews = reviewsByProduct.get(product.id) || []
+
+			return {
+				alias: product.alias,
+				title: product.title,
+				_id: product.page_id,
+				productId: product.product_id,
+				category: product.category,
+				price: Number(product.price),
+				credit: Number(product.credit),
+				images: product.images,
+				oldPrice: Number(product.old_price),
+				description: product.description,
+				advantages: product.advantages || '',
+				disadvantages: product.disadvantages || '',
+				tags: product.tags || [],
+				characteristics: characteristics.map(c => ({
+					name: c.name,
+					value: c.value,
+				})),
+				initialRating: Number(product.initial_rating),
+				reviewCount: product.review_count,
+				reviews: reviews.map(r => ({
+					_id: r.id,
+					name: r.name,
+					title: r.title,
+					description: r.description,
+					rating: r.rating,
+					productId: r.product_id,
+				})),
+			}
+		})
 
 		return {
 			props: { menu, page, products, firstCategory: firstCategoryItem.id },

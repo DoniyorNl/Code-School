@@ -1,37 +1,11 @@
 import cn from 'classnames'
 import { motion } from 'framer-motion'
 import { ForwardedRef, forwardRef, useRef, useState } from 'react'
-import {
-	FaAngular,
-	FaBook,
-	FaBriefcase,
-	FaBullhorn,
-	FaChartLine,
-	FaCode,
-	FaCog,
-	FaFigma,
-	FaInstagram,
-	FaLightbulb,
-	FaMobileAlt,
-	FaPaintBrush,
-	FaReact,
-	FaSearchDollar,
-	FaTasks,
-	FaVuejs,
-} from 'react-icons/fa'
-import {
-	SiAdobeillustrator,
-	SiAdobephotoshop,
-	SiNextdotjs,
-	SiNodedotjs,
-	SiNuxtdotjs,
-	SiRedux,
-} from 'react-icons/si'
-import { v4 as uuidv4 } from 'uuid'
 import { convertToUSD, dedectedReview } from '../../helpers/helpers'
 import Button from '../button/button'
 import Card from '../card/card'
 import Divider from '../divider/divider'
+import Icon from '../icon/DynamicIcon'
 import Rating from '../rating/rating'
 import ReivewForm from '../review-form/review-form'
 import Review from '../review/review'
@@ -46,7 +20,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// React variants
 	if (titleLower.includes('react advanced') || titleLower.includes('redux')) {
 		return (
-			<SiRedux
+			<Icon
+				name='SiRedux'
 				style={{ fontSize: '70px', color: '#764ABC' }}
 				title='Redux'
 				aria-label='Redux icon'
@@ -58,7 +33,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 		(titleLower.includes('fullstack') || titleLower.includes('full-stack'))
 	) {
 		return (
-			<SiNodedotjs
+			<Icon
+				name='SiNodedotjs'
 				style={{ fontSize: '70px', color: '#339933' }}
 				title='Full-Stack'
 				aria-label='Full-Stack icon'
@@ -67,7 +43,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('react')) {
 		return (
-			<FaReact
+			<Icon
+				name='FaReact'
 				style={{ fontSize: '70px', color: '#61DAFB' }}
 				title='React'
 				aria-label='React icon'
@@ -78,7 +55,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Vue variants
 	if (titleLower.includes('nuxt')) {
 		return (
-			<SiNuxtdotjs
+			<Icon
+				name='SiNuxtdotjs'
 				style={{ fontSize: '70px', color: '#00C58E' }}
 				title='Nuxt.js'
 				aria-label='Nuxt.js icon'
@@ -87,7 +65,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('vue')) {
 		return (
-			<FaVuejs
+			<Icon
+				name='FaVuejs'
 				style={{ fontSize: '70px', color: '#42B883' }}
 				title='Vue.js'
 				aria-label='Vue.js icon'
@@ -98,7 +77,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Angular
 	if (titleLower.includes('angular')) {
 		return (
-			<FaAngular
+			<Icon
+				name='FaAngular'
 				style={{ fontSize: '70px', color: '#DD0031' }}
 				title='Angular'
 				aria-label='Angular icon'
@@ -109,7 +89,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Next.js
 	if (titleLower.includes('next')) {
 		return (
-			<SiNextdotjs
+			<Icon
+				name='SiNextdotjs'
 				style={{ fontSize: '70px', color: '#000000' }}
 				title='Next.js'
 				aria-label='Next.js icon'
@@ -120,7 +101,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Design
 	if (titleLower.includes('ui/ux') || allTags.includes('ui') || allTags.includes('ux')) {
 		return (
-			<FaFigma
+			<Icon
+				name='FaFigma'
 				style={{ fontSize: '70px', color: '#F24E1E' }}
 				title='UI/UX Design'
 				aria-label='UI/UX Design icon'
@@ -129,7 +111,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('photoshop') || allTags.includes('photoshop')) {
 		return (
-			<SiAdobephotoshop
+			<Icon
+				name='SiAdobephotoshop'
 				style={{ fontSize: '70px', color: '#31A8FF' }}
 				title='Photoshop'
 				aria-label='Photoshop icon'
@@ -138,7 +121,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('illustrator') || allTags.includes('illustrator')) {
 		return (
-			<SiAdobeillustrator
+			<Icon
+				name='SiAdobeillustrator'
 				style={{ fontSize: '70px', color: '#FF9A00' }}
 				title='Illustrator'
 				aria-label='Illustrator icon'
@@ -147,7 +131,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('graphic') || allTags.includes('graphic')) {
 		return (
-			<FaPaintBrush
+			<Icon
+				name='FaPaintBrush'
 				style={{ fontSize: '70px', color: '#FF0000' }}
 				title='Graphic Design'
 				aria-label='Graphic Design icon'
@@ -156,7 +141,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('web design')) {
 		return (
-			<FaPaintBrush
+			<Icon
+				name='FaPaintBrush'
 				style={{ fontSize: '70px', color: '#FF6B6B' }}
 				title='Web Design'
 				aria-label='Web Design icon'
@@ -167,7 +153,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Marketing
 	if (titleLower.includes('digital marketing')) {
 		return (
-			<FaBullhorn
+			<Icon
+				name='FaBullhorn'
 				style={{ fontSize: '70px', color: '#FF6B35' }}
 				title='Digital Marketing'
 				aria-label='Digital Marketing icon'
@@ -176,7 +163,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('smm') || allTags.includes('smm')) {
 		return (
-			<FaInstagram
+			<Icon
+				name='FaInstagram'
 				style={{ fontSize: '70px', color: '#E1306C' }}
 				title='SMM'
 				aria-label='Social Media Marketing icon'
@@ -185,7 +173,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('seo') || allTags.includes('seo')) {
 		return (
-			<FaSearchDollar
+			<Icon
+				name='FaSearchDollar'
 				style={{ fontSize: '70px', color: '#4285F4' }}
 				title='SEO'
 				aria-label='SEO icon'
@@ -196,7 +185,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Business
 	if (titleLower.includes('analytics') || allTags.includes('analytics')) {
 		return (
-			<FaChartLine
+			<Icon
+				name='FaChartLine'
 				style={{ fontSize: '70px', color: '#10B981' }}
 				title='Business Analytics'
 				aria-label='Business Analytics icon'
@@ -205,7 +195,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('startup') || allTags.includes('startup')) {
 		return (
-			<FaLightbulb
+			<Icon
+				name='FaLightbulb'
 				style={{ fontSize: '70px', color: '#FCD34D' }}
 				title='Startup'
 				aria-label='Startup icon'
@@ -214,7 +205,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('project management') || allTags.includes('pm')) {
 		return (
-			<FaTasks
+			<Icon
+				name='FaTasks'
 				style={{ fontSize: '70px', color: '#8B5CF6' }}
 				title='Project Management'
 				aria-label='Project Management icon'
@@ -225,14 +217,20 @@ const getProductIcon = (title: string, tags: string[]) => {
 	// Books
 	if (titleLower.includes('book') || allTags.includes('book')) {
 		return (
-			<FaBook style={{ fontSize: '70px', color: '#F59E0B' }} title='Book' aria-label='Book icon' />
+			<Icon
+				name='FaBook'
+				style={{ fontSize: '70px', color: '#F59E0B' }}
+				title='Book'
+				aria-label='Book icon'
+			/>
 		)
 	}
 
 	// Services
 	if (titleLower.includes('consulting')) {
 		return (
-			<FaBriefcase
+			<Icon
+				name='FaBriefcase'
 				style={{ fontSize: '70px', color: '#6366F1' }}
 				title='Consulting'
 				aria-label='Consulting icon'
@@ -241,7 +239,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('web development')) {
 		return (
-			<FaCode
+			<Icon
+				name='FaCode'
 				style={{ fontSize: '70px', color: '#14B8A6' }}
 				title='Web Development'
 				aria-label='Web Development icon'
@@ -250,7 +249,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('mobile')) {
 		return (
-			<FaMobileAlt
+			<Icon
+				name='FaMobileAlt'
 				style={{ fontSize: '70px', color: '#EC4899' }}
 				title='Mobile Development'
 				aria-label='Mobile Development icon'
@@ -259,7 +259,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 	}
 	if (titleLower.includes('software') || titleLower.includes('development')) {
 		return (
-			<FaCog
+			<Icon
+				name='FaCog'
 				style={{ fontSize: '70px', color: '#64748B' }}
 				title='Software Development'
 				aria-label='Software Development icon'
@@ -269,7 +270,8 @@ const getProductIcon = (title: string, tags: string[]) => {
 
 	// Default fallback
 	return (
-		<FaCode
+		<Icon
+			name='FaCode'
 			style={{ fontSize: '70px', color: '#6B7280' }}
 			title='Course'
 			aria-label='Course icon'
@@ -323,8 +325,8 @@ const Product = motion(
 						</div>
 						<div className={styles.tags}>
 							{product.tags.length > 0 &&
-								product.tags.map(t => (
-									<Tag key={uuidv4()} className={styles.category} color={'primary'}>
+								product.tags.map((t, idx) => (
+									<Tag key={`tag-${t}-${idx}`} className={styles.category} color={'primary'}>
 										{t}
 									</Tag>
 								))}
@@ -344,7 +346,7 @@ const Product = motion(
 						<div className={styles.features}>
 							{product.characteristics.length > 0 &&
 								product.characteristics.map(ch => (
-									<div className={styles.characteristic} key={uuidv4()}>
+									<div className={styles.characteristic} key={ch.name}>
 										<span className={styles.characteristicName}>{ch.name}</span>
 										<span className={styles.characteristicDots}></span>
 										<span className={styles.characteristicValue}>{ch.value}</span>

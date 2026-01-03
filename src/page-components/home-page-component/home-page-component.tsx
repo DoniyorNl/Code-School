@@ -1,15 +1,14 @@
-import Image from 'next/image'
 import { Fragment } from 'react'
-import { Button, Card, Heading, ScrollUp, Text, Timeline, TimelineItem } from '../../components'
+import { Button, Card, Heading, Text, Timeline, TimelineItem } from '../../components'
+import HeroIllustration from '../../components/hero-illustration/hero-illustration'
+import Icon from '../../components/icon/DynamicIcon'
 import { company, timeLineList } from '../../helpers/constants'
 import Footer from '../../layout/footer/footer'
-import Navbar from '../../layout/navbar/navbar'
 import styles from './home-page-component.module.css'
 
 const HomePageComponent = () => {
 	return (
 		<div className={styles.home}>
-			<Navbar />
 			<div className={styles.hero}>
 				<div className={styles.heroTitle}>
 					<Heading tag='h1'>
@@ -25,21 +24,11 @@ const HomePageComponent = () => {
 						arrow='right'
 						style={{ border: '1px solid yellowgreen', color: 'yellowgreen' }}
 					>
-						Join For Free
+						<a href="http://localhost:3000/contact">Join for free</a>
 					</Button>
 				</div>
 				<div className={styles.heroImage}>
-					<Image
-						src={'/hero.png'}
-						alt={'hero-image'}
-						width={635}
-						height={508}
-						priority
-					fetchPriority='high'
-						placeholder='blur'
-						blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
-						quality={90}
-					/>
+					<HeroIllustration />
 				</div>
 			</div>
 			<div className={styles.company}>
@@ -54,8 +43,8 @@ const HomePageComponent = () => {
 				<Heading tag='h2'>What we can teach you</Heading>
 				<div className={styles.timelineCard}>
 					<Timeline>
-						{timeLineList.map(({ Icon, title, text }, idx) => (
-							<TimelineItem key={idx} title={title} icon={<Icon />}>
+						{timeLineList.map(({ Icon: iconName, title, text }, idx) => (
+							<TimelineItem key={idx} title={title} icon={<Icon name={iconName as any} />}>
 								<Card color='white' style={{ padding: 20 }}>
 									<Text>{text}</Text>
 								</Card>
@@ -72,7 +61,6 @@ const HomePageComponent = () => {
 					))}
 				</div>
 			</div>
-			<ScrollUp />
 			<Footer />
 		</div>
 	)

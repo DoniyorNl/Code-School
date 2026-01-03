@@ -1,46 +1,61 @@
 .header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
 	display: grid;
-	grid-template-columns: 1fr auto;
-	margin: 15px 15px 0 15px;
-	gap: 10px;
+	grid-template-columns: auto 1fr auto;
+	padding: 15px 30px;
+	gap: 30px;
 	align-items: center;
+	background: linear-gradient(135deg, #1e1e1e 0%, #2a2a4a 50%, #1a1a2e 100%);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+
+.logo {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.logo svg {
+	display: block;
+}
+
+/* Desktop Navigation */
+.desktopNav {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+	justify-content: center;
+}
+
+.navLink {
+	color: var(--white);
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: 500;
+	padding: 8px 16px;
+	border-radius: 8px;
+	transition: all 0.2s ease;
+	position: relative;
+}
+
+.navLink:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+.navLink:active {
+	background: rgba(255, 255, 255, 0.15);
 }
 
 .headerActions {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-}
-
-.installButton {
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	padding: 8px 16px;
-	background: var(--primary);
-	color: var(--white);
-	border: none;
-	border-radius: 8px;
-	font-size: 14px;
-	font-weight: 500;
-	cursor: pointer;
-	transition: all 0.2s ease;
-	box-shadow: 0 2px 8px rgba(118, 83, 252, 0.3);
-}
-
-.installButton:hover {
-	background: var(--primary-hover);
-	box-shadow: 0 4px 12px rgba(118, 83, 252, 0.4);
-	transform: translateY(-1px);
-}
-
-.installButton:active {
-	transform: translateY(0);
-}
-
-.installButton svg {
-	width: 18px;
-	height: 18px;
 }
 
 .mobileMenu {
@@ -55,6 +70,11 @@
 	overflow-y: scroll;
 }
 
+/* Mobile Menu Button - faqat mobileda */
+.mobileMenuButton {
+	display: none;
+}
+
 .closeIcon {
 	position: fixed;
 	top: 15px;
@@ -65,15 +85,17 @@
 @media screen and (max-width: 900px) {
 	.header {
 		grid-template-columns: 1fr auto;
+		padding: 12px 15px;
+		gap: 10px;
 	}
 
-	.installButton span {
+	/* Desktop Navigation yashirish */
+	.desktopNav {
 		display: none;
 	}
 
-	.installButton {
-		padding: 8px 12px;
-		min-width: 40px;
-		justify-content: center;
+	/* Mobile Menu Button ko'rsatish */
+	.mobileMenuButton {
+		display: block;
 	}
 }
