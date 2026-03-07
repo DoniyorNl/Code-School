@@ -1,5 +1,5 @@
 import { logger } from '../helpers/logger'
-import { safeGetServerSideProps } from '../helpers/ssr'
+import { getErrorMessage, safeGetServerSideProps } from '../helpers/ssr'
 import { getOrganizationSchema, getWebsiteSchema } from '../helpers/structured-data'
 import { MenuItem } from '../interfaces/menu.interface'
 import { PageCategory } from '../interfaces/page.interface'
@@ -72,7 +72,7 @@ export const getServerSideProps = safeGetServerSideProps(async () => {
 			props: {
 				menu: [],
 				firstCategory: PageCategory.Courses,
-				fetchError: error instanceof Error ? error.message : String(error),
+				fetchError: getErrorMessage(error),
 			},
 		}
 	}

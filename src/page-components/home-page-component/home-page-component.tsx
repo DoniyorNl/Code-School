@@ -14,12 +14,11 @@ const HomePageComponent = () => {
 			<div className={styles.hero}>
 				<div className={styles.heroTitle}>
 					<Heading tag='h1'>
-						Lern New Skills Online With [CodeSchool] <span>Academy</span>
+						Learn New Skills Online With [CodeSchool] <span>Academy</span>
 					</Heading>
 					<Text>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil nulla adipisci temporibus
-						ad, veniam blanditiis optio voluptatibus eius id, eaque, ex aperiam quam voluptatum
-						deleniti quos? Quis voluptatum rem quaerat.
+						O'zbek tilida zamonaviy dasturlash kurslari — TypeScript, Next.js, React, Vue, Backend.
+						Bepul darslar, loyihalar va portfolio tayyorlash. Dasturlashni noldan professional darajagacha o'rganing.
 					</Text>
 					<Button
 						appearance='ghost'
